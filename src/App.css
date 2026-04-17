@@ -1,0 +1,30 @@
+.app {
+  height: 100vh;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  gap: 30px
+}
+.glass {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.31);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+}
+
+.main-panel {
+  height: 90%;
+  min-width: 475px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  padding: 10px;
+}
+
+.title-card {
+  display: flex;
+  justify-content: center;
+}
