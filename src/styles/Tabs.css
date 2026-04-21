@@ -1,4 +1,5 @@
 .tabs{
+    position: relative;
     overflow: hidden;
     display: flex;
     flex-wrap: wrap;
@@ -7,6 +8,23 @@
     background-color: var(--accent-color);
     padding: 5px 20px;
     flex: 1;
+}
+
+.tab-indicator {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    height: calc(100% - 10px);  /* respects your 5px top/bottom padding */
+    /* From https://css.glass */
+    background: rgba(103, 7, 139, 0.23);
+    /* border-radius: 16px; */
+    box-shadow: 3px 2px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(103, 7, 139, 0.62);
+    border-radius: 8px;
+    transition: transform 0.3s ease, width 0.3s ease;
+    pointer-events: none;  /* clicks pass through to buttons */
 }
 
 .tab-wrapper{
@@ -18,6 +36,8 @@
 }
 
 .tabs button {
+    position: relative;
+    z-index: 1;
     background: transparent;
     border: none;
     outline: none;
@@ -29,13 +49,11 @@
 }
 
 .tabs button.active {
-    /* From https://css.glass */
-    background: rgba(103, 7, 139, 0.23);
-    /* border-radius: 16px; */
-    box-shadow: 3px 3px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(103, 7, 139, 0.62);
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
 }
 
 .tabcontent {
