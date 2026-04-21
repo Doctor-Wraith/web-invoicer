@@ -1,4 +1,15 @@
+import "../styles/ProductTab.css";
 
 export default function ProductTab() {
-    return (<>Product Tab</>)
+    return (
+        <div className="tab product-tab">
+            <div className="products-title">
+                <h3>Products</h3>
+
+                {/*  Add Product Button  */}
+
+            </div>
+        </div>
+
+    )
 }

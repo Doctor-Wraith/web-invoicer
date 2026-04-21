@@ -1,0 +1,16 @@
+
+.product-tab {
+    /*background-color: red;*/
+    width: 90%;
+}
+
+.products-title {
+    display: flex;
+    max-height: 5%;
+    width: 100%;
+    /*background-color: red;*/
+}
+
+.products-title h3 {
+    margin: 0;
+}

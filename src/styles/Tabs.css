@@ -1,4 +1,4 @@
-.tab{
+.tabs{
     overflow: hidden;
     display: flex;
     flex-wrap: wrap;
@@ -6,15 +6,18 @@
     border-radius: 16px;
     background-color: var(--accent-color);
     padding: 5px 20px;
+    flex: 1;
 }
 
 .tab-wrapper{
     justify-content: center;
     padding-bottom: 10px;
     /*border-bottom: 1px solid white;*/
+    height: 100%;
+    /*background-color: red;*/
 }
 
-.tab button {
+.tabs button {
     background: transparent;
     border: none;
     outline: none;
@@ -25,7 +28,7 @@
     border-radius: 8px;
 }
 
-.tab button.active {
+.tabs button.active {
     /* From https://css.glass */
     background: rgba(103, 7, 139, 0.23);
     /* border-radius: 16px; */
@@ -47,3 +50,8 @@
     display: block;
 }
 
+.tab {
+    display: flex;
+    height: 97%;
+    padding: 5px 20px;
+}

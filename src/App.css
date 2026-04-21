@@ -18,8 +18,10 @@
 }
 
 .main-panel {
-  height: 90%;
-  min-width: 475px;
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  min-width: 65vh;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
   padding: 10px;
 }
@@ -27,4 +29,18 @@
 .title-card {
   display: flex;
   justify-content: center;
+}
+
+@media (max-width: 1120px) {
+  .app {
+    padding: 5vh 2vh;
+  }
+
+  .main-panel {
+    min-width: 0;
+  }
+
+  .preview {
+    display: none;
+  }
 }
