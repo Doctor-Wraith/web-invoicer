@@ -1,7 +1,7 @@
 import {type JSX, useState} from "react";
 import * as React from "react";
 
-type Variant = "primary" | "outline" | "accent" | "ghost";
+type Variant = "primary" | "outline" | "accent" | "ghost" | "glass";
 type Size = "default" | "small" | "icon";
 
 interface IconButton {
@@ -23,14 +23,14 @@ const PlusIcon= (): JSX.Element  => {
 };
 
 export default function IconButton({
-    onClick,
-    label = "Button",
-    icon: Icon = PlusIcon,
-    variant = "primary",
-    size = "default",
-    disabled = false,
-    className = "",
-    style = {},
+        onClick,
+        label = "Button",
+        icon: Icon = PlusIcon,
+        variant = "primary",
+        size = "default",
+        disabled = false,
+        className = "",
+        style = {},
                                    }: IconButton) {
     const [pressed, setPressed] = useState<boolean>(false);
 
@@ -81,6 +81,16 @@ export default function IconButton({
         ghost: {
             background: "rgba(0, 0, 0, 0.05)",
             color: "inherit",
+            padding,
+        },
+        glass: {
+             // From https://css.glass
+            background: "rgba(104, 45, 220, 0.11)",
+            borderRadius: "16px",
+            boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
             padding,
         }
     };

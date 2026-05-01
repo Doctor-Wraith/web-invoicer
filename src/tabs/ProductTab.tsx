@@ -8,8 +8,9 @@ export default function ProductTab() {
                 <h3>Products</h3>
 
                 <IconButton
-                label="Add"
-                variant="ghost"
+                    label="Add"
+                    variant="glass"
+                    onClick={() => alert("Add Product")}
                 />
             </div>
         </div>
