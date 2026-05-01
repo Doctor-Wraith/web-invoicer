@@ -25,7 +25,7 @@ export default function ProductList({mode = "product" , products, setProducts, o
     }
 
     return (
-        <div className="product-list" style={{ minWidth: 0, width: "100%", maxWidth: "100%", overflowX: "hidden" }}>
+        <div className="product-list">
             {products.map(product => (
                 <ProductRow
                     key={product.id}

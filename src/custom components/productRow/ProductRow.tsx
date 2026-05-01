@@ -53,6 +53,7 @@ const baseInput: CSSProperties = {
 
 const styles: Record<string, CSSProperties> = {
     row: {
+        minHeight: "44px",
         display: "flex",
         width: "100%",
         minWidth: 0,

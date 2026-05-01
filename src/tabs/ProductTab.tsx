@@ -4,9 +4,9 @@ import ProductList from "../custom components/ProductList.tsx";
 import {type ProductInformation} from "../custom components/productRow/ProductRow.tsx";
 import {useState} from "react";
 
-const STORAGE_KEY = "products";
+const STORAGE_KEY = "services";
 
-const load_products = ():ProductInformation[] => {
+const load_services = ():ProductInformation[] => {
     try {
         const stored = localStorage.getItem(STORAGE_KEY);
         return stored ? JSON.parse(stored) : [];
@@ -20,7 +20,7 @@ const save_products = (products: ProductInformation[]) => {
 }
 
 export default function ProductTab() {
-    const [products, setProducts] = useState<ProductInformation[]>(load_products);
+    const [products, setProducts] = useState<ProductInformation[]>(load_services);
 
     const handleAdd = () => {
         const added = [...products, {
@@ -46,13 +46,14 @@ export default function ProductTab() {
                     onClick={handleAdd}
                 />
             </div>
-
-            <ProductList
-                products={products}
-                setProducts={setProducts}
-                mode={"product"}
-                onSave={save_products}
-            />
+            <div className="products-list-wrapper">
+                <ProductList
+                    products={products}
+                    setProducts={setProducts}
+                    mode={"service"}
+                    onSave={save_products}
+                />
+            </div>
         </div>
 
     )
