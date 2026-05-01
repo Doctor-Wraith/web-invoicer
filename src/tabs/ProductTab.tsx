@@ -46,25 +46,14 @@ export default function ProductTab() {
                     onClick={handleAdd}
                 />
             </div>
-
-
-            <div className="products-list-wrapper">
-                <div className="products-list-header-wrapper">
-                    <div className="products-list-header">
-                        <div >Product Name</div>
-                        <div >Model / SKU</div>
-                        <div >Amount</div>
-                        <div>Unit Price</div>
-                        <div style={{width: "40px", flexShrink: 0,}}></div>
-                    </div>
-                </div>
+            <div className="products-list-wrapper-outer">
                 <ProductList
                     products={products}
-                    setProducts={setProducts}
-                    mode={"product"}
                     onSave={save_products}
+                    setProducts={setProducts}
                 />
             </div>
+
         </div>
 
     )

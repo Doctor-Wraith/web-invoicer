@@ -1,5 +1,7 @@
 import ProductRow, {type ProductInformation } from "./productRow/ProductRow.tsx";
 import React from "react";
+import TableHeader from "./TableHeader.tsx";
+import "../styles/ProductTab.css";
 
 type Mode = "product" | "service";
 
@@ -25,16 +27,22 @@ export default function ProductList({mode = "product" , products, setProducts, o
     }
 
     return (
-        <div className="product-list">
-            {products.map(product => (
-                <ProductRow
-                    key={product.id}
-                    data={product}
-                    mode={mode}
-                    onChange={handleChange}
-                    onDelete={handleDelete}
-                />
-            ))}
-        </div>
+        <>
+            <TableHeader
+                mode={mode}
+            />
+
+            <div className="products-list-wrapper">
+                {products.map(p => (
+                    <ProductRow
+                        key={p.id}
+                        data={p}
+                        onDelete={handleDelete}
+                        onChange={handleChange}
+                        mode={mode}
+                    />
+                ))}
+            </div>
+        </>
     )
 }

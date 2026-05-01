@@ -1,6 +1,6 @@
 import React, {type CSSProperties, type JSX} from "react";
 import "./ProductRow.css"
-
+import {productColumns} from "../tableColumns.ts";
 
 type Mode = "product" | "service";
 
@@ -176,96 +176,114 @@ export default function ProductRow({
         onChange?.({ ...data, [field]: value });
     }
 
+
     return (
-        <div style={styles.row} className="product-row">
-            {/*  Name  */}
-            <div className="product-input" style={styles.cell}>
-                <input
-                    style={styles.input}
-                    type="text"
-                    placeholder={nameLabel}
-                    value={data.name}
-                    onChange={e => update("name", e.target.value)}
-                    />
-            </div>
+        <div className="table-row">
+        {productColumns.map(col => {
+                if (col.key === "name") {
+                    return (
+                        <div key={col.key} style={{ flex: col.flex }}>
+                            <input
+                                style={styles.input}
+                                type="text"
+                                placeholder={nameLabel}
+                                value={data.name}
+                                onChange={e => update("name", e.target.value)}
+                            />
+                        </div>
+                    );
+                }
 
-            {/*  Model  */}
-            <div className="product-input" style={styles.modelCell}>
-                <input
-                    style={styles.modelInput}
-                    type="text"
-                    placeholder={modelLabel}
-                    value={data.modelNumber}
-                    onChange={e => update("modelNumber", e.target.value)}
-                />
-            </div>
+                if (col.key === "modelNumber") {
+                    return (
+                        <div key={col.key} style={{ flex: col.flex }}>
+                            <input
+                                style={styles.modelInput}
+                                type="text"
+                                placeholder={modelLabel}
+                                value={data.modelNumber}
+                                onChange={e => update("modelNumber", e.target.value)}
+                            />
+                        </div>
+                    );
+                }
 
-            {/*  Amount   */}
-            <div className="product-input" style={styles.numberCell}>
-                <button
-                    className="spin-btn"
-                    style={spinBtn}
-                    onClick={() => update("amount", Math.max(0, data.amount - 1))}
-                >
-                    −
-                </button>
-                <input
-                    className="no-spinner"
-                    style={styles.numberInput}
-                    type="number"
-                    min={0}
-                    placeholder={amountLabel}
-                    value={data.amount === 0 ? "" : data.amount}
-                    onChange={e => update("amount", parseFloat(e.target.value) || 0)}
-                />
-                <button
-                    className="spin-btn"
-                    style={spinBtn}
-                    onClick={() => update("amount", data.amount + 1)}
-                >
-                    +
-                </button>
-            </div>
+                if (col.key === "amount") {
+                    return (
+                        <div key={col.key} style={{...styles.numberCell, flex: col.flex }}>
+                            <button
+                                className="spin-btn"
+                                style={spinBtn}
+                                onClick={() => update("amount", Math.max(0, data.amount - 1))}
+                            >
+                                −
+                            </button>
+                            <input
+                                className="no-spinner"
+                                style={styles.numberInput}
+                                type="number"
+                                min={0}
+                                placeholder={amountLabel}
+                                value={data.amount === 0 ? "" : data.amount}
+                                onChange={e => update("amount", parseFloat(e.target.value) || 0)}
+                            />
+                            <button
+                                className="spin-btn"
+                                style={spinBtn}
+                                onClick={() => update("amount", data.amount + 1)}
+                            >
+                                +
+                            </button>
+                        </div>
+                    );
+                }
 
-            {/*  Cost  */}
-            <div style={{ ...styles.numberCell, flex: 1.1 }} className="product-input">
-                <button
-                    className="spin-btn"
-                    style={spinBtn}
-                    onClick={() => update("cost", Math.max(0, data.cost - 0.5))}
-                >
-                    −
-                </button>
-                <input
-                    className="no-spinner"
-                    style={styles.numberInput}
-                    type="number"
-                    min={0}
-                    step={0.01}
-                    placeholder={costLabel}
-                    value={data.cost === 0 ? "" : data.cost}
-                    onChange={e => update("cost", parseFloat(e.target.value) || 0)}
-                />
-                <button
-                    className="spin-btn"
-                    style={spinBtn}
-                    onClick={() => update("cost", data.cost + 0.5)}
-                >
-                    +
-                </button>
-            </div>
+                if (col.key === "cost") {
+                    return (
+                        <div key={col.key} style={{...styles.numberCell, flex: col.flex }}>
+                            <button
+                                className="spin-btn"
+                                style={spinBtn}
+                                onClick={() => update("cost", Math.max(0, data.cost - 0.5))}
+                            >
+                                −
+                            </button>
+                            <input
+                                className="no-spinner"
+                                style={styles.numberInput}
+                                type="number"
+                                min={0}
+                                step={0.01}
+                                placeholder={costLabel}
+                                value={data.cost === 0 ? "" : data.cost}
+                                onChange={e => update("cost", parseFloat(e.target.value) || 0)}
+                            />
+                            <button
+                                className="spin-btn"
+                                style={spinBtn}
+                                onClick={() => update("cost", data.cost + 0.5)}
+                            >
+                                +
+                            </button>
+                        </div>
+                    );
+                }
 
+                if (col.key === "actions") {
+                    return (
+                            <button
+                                key={col.key} style={{...styles.deleteBtn, flex: col.flex }}
+                                onClick={() => onDelete?.(data.id)}
+                                aria-label="Remove item"
+                                title="Remove item"
+                            >
+                                <TrashIcon />
+                            </button>
 
-            {/* Delete */}
-            <button
-                style={styles.deleteBtn}
-                onClick={() => onDelete?.(data.id)}
-                aria-label="Remove item"
-                title="Remove item"
-            >
-                <TrashIcon />
-            </button>
-
+                    );
+                }
+                return null;
+            })}
         </div>
     )
 }
