@@ -25,6 +25,8 @@ const baseCell: CSSProperties = {
     minWidth: 0,
     overflow: "hidden",
     borderRight: "1px solid #d1d5db",
+    fontWeight: 500,
+    color: "white",
 };
 
 const baseInput: CSSProperties = {
@@ -38,6 +40,8 @@ const baseInput: CSSProperties = {
     background: "transparent",
     boxSizing: "border-box",
     minWidth: 0,
+    fontWeight: 500,
+    color: "white",
 };
 
 const styles: Record<string, CSSProperties> = {
@@ -61,11 +65,12 @@ const styles: Record<string, CSSProperties> = {
     modelCell: {
         ...baseCell,
         flex: 1,
-        background: "#f9fafb",
     },
     numberCell: {
         ...baseCell,
         flex: 1,
+        gap: "4px",
+        padding: "2px 6px"
     },
 
     // Inputs
@@ -79,13 +84,11 @@ const styles: Record<string, CSSProperties> = {
     },
     modelInput: {
         ...baseInput,
-        color: "#4f6ef7",
         fontWeight: 500,
         maxWidth: "100%",
     },
     numberInput: {
         ...baseInput,
-        color: "#4f6ef7",
         fontWeight: 500,
         maxWidth: "100%",
     },
@@ -100,24 +103,37 @@ const styles: Record<string, CSSProperties> = {
         background: "none",
         border: "none",
         cursor: "pointer",
-        color: "#ef4444",
+        color: "#ffffff",
+        backgroundColor: "#ef4444",
         padding: "0 12px",
         transition: "background 0.15s",
         height: "100%",
     },
 };
 
-const ChevronUp = (): JSX.Element => (
-    <svg width="10" height="7" viewBox="0 0 10 7" fill="none">
-        <path d="M1 6l4-4 4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-);
+const spinBtn: CSSProperties = {
+    width: "24px",
+    height: "24px",
+    borderRadius: "8px",
 
-const ChevronDown = (): JSX.Element => (
-    <svg width="10" height="7" viewBox="0 0 10 7" fill="none">
-        <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-);
+    background: "rgba(104, 45, 220, 0.12)",
+    backdropFilter: "blur(10px)",
+    WebkitBackdropFilter: "blur(10px)",
+
+    border: "1px solid rgba(255, 255, 255, 0.15)",
+    color: "#e5e7eb",
+
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+
+    fontSize: "13px",
+    fontWeight: 500,
+    cursor: "pointer",
+
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.25)",
+    transition: "all 0.15s ease",
+};
 
 const TrashIcon = (): JSX.Element => (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -131,12 +147,11 @@ export default function ProductRow({
     mode = "product",
     onChange,
     onDelete,
-                                   }: ProductRowProps): React.JSX.Element {
-
-    const amountLabel = mode === "service" ? "Hours" : "Quantity";
+   }: ProductRowProps): React.JSX.Element {
+    const amountLabel = mode === "service" ? "Hours" : "QTY";
     const modelLabel = mode === "service" ? "Service code" : "Product code";
     const nameLabel = mode === "service" ? "Service name": "Product name";
-    const costLabel = mode === "service" ? "Rate (/Hour)" : "Unit Price";
+    const costLabel = mode === "service" ? "Rate" : "Price";
 
     const update = (field: keyof ProductInformation, value: string | number) => {
         onChange?.({ ...data, [field]: value });
@@ -168,6 +183,13 @@ export default function ProductRow({
 
             {/*  Amount   */}
             <div style={styles.numberCell}>
+                <button
+                    className="spin-btn"
+                    style={spinBtn}
+                    onClick={() => update("amount", Math.max(0, data.amount - 1))}
+                >
+                    −
+                </button>
                 <input
                     className="no-spinner"
                     style={styles.numberInput}
@@ -177,11 +199,25 @@ export default function ProductRow({
                     value={data.amount === 0 ? "" : data.amount}
                     onChange={e => update("amount", parseFloat(e.target.value) || 0)}
                 />
+                <button
+                    className="spin-btn"
+                    style={spinBtn}
+                    onClick={() => update("amount", data.amount + 1)}
+                >
+                    +
+                </button>
             </div>
 
 
             {/*  Cost  */}
             <div style={styles.numberCell}>
+                <button
+                    className="spin-btn"
+                    style={spinBtn}
+                    onClick={() => update("cost", Math.max(0, data.cost - 0.5))}
+                >
+                    −
+                </button>
                 <input
                     className="no-spinner"
                     style={styles.numberInput}
@@ -192,6 +228,13 @@ export default function ProductRow({
                     value={data.cost === 0 ? "" : data.cost}
                     onChange={e => update("cost", parseFloat(e.target.value) || 0)}
                 />
+                <button
+                    className="spin-btn"
+                    style={spinBtn}
+                    onClick={() => update("cost", data.cost + 0.5)}
+                >
+                    +
+                </button>
             </div>
 
 
