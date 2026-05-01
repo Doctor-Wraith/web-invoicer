@@ -2,26 +2,15 @@ import "../styles/ProductTab.css";
 import IconButton from "../custom components/IconButton.tsx";
 import ProductList from "../custom components/ProductList.tsx";
 import {type ProductInformation} from "../custom components/productRow/ProductRow.tsx";
-import {useState} from "react";
+import React from "react";
 
-const STORAGE_KEY = "services";
-
-const load_services = ():ProductInformation[] => {
-    try {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        return stored ? JSON.parse(stored) : [];
-    } catch {
-        return []
-    }
+interface ServicesTabProps {
+    services: ProductInformation[];
+    setServices: React.Dispatch<React.SetStateAction<ProductInformation[]>>;
+    save_Services: (products: ProductInformation[]) => void;
 }
 
-const save_products = (products: ProductInformation[]) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
-}
-
-export default function ServicesTab() {
-    const [services, setServices] = useState<ProductInformation[]>(load_services);
-
+export default function ServicesTab({services, setServices, save_Services}: ServicesTabProps) {
     const handleAdd = () => {
         const added = [...services, {
             id: crypto.randomUUID(),
@@ -31,7 +20,7 @@ export default function ServicesTab() {
             cost: 0
         }];
         setServices(added);
-        save_products(added);
+        save_Services(added);
     }
 
 
@@ -54,7 +43,7 @@ export default function ServicesTab() {
                     products={services}
                     setProducts={setServices}
                     mode={"service"}
-                    onSave={save_products}
+                    onSave={save_Services}
                 />
             </div>
         </div>

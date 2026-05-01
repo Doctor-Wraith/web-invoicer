@@ -5,16 +5,31 @@ import PaymentTab from "./PaymentTab"
 import CompanyTab from "./CompanyTab"
 import ServicesTab from "./ServicesTab.tsx";
 import "../styles/Tabs.css"
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
+import type {ProductInformation} from "../custom components/productRow/ProductRow.tsx";
+import {type Currency} from "../data/currencies.tsx";
 
 interface TabProps {
     activeTab: string;
     setActiveTab: (activeTab: string) => void;
+    services: ProductInformation[];
+    setServices: React.Dispatch<React.SetStateAction<ProductInformation[]>>;
+    save_services: (products: ProductInformation[]) => void;
+    products: ProductInformation[];
+    setProducts: React.Dispatch<React.SetStateAction<ProductInformation[]>>;
+    save_products: (products: ProductInformation[]) => void;
+    invoice_currency: Currency;
+    invoice_setCurrency: (currency: Currency) => void;
 }
 
 const TABS = ["Products", "Services", "Customer", "Invoice", "Payment", "Company"]
 
-export default function Tabs({activeTab, setActiveTab}: TabProps) {
+export default function Tabs({
+     activeTab, setActiveTab,
+     services, setServices, save_services,
+    products, setProducts, save_products,
+    invoice_currency, invoice_setCurrency,
+}: TabProps) {
 
     const [indicatorStyle, setIndicatorStyle] = useState({});
     const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -52,11 +67,19 @@ export default function Tabs({activeTab, setActiveTab}: TabProps) {
             </div>
 
             <div className={`tabcontent${activeTab === "Products" ? " active" : ""}`}>
-                <ProductTab />
+                <ProductTab
+                    products={products}
+                    setProducts={setProducts}
+                    save_products={save_products}
+                />
             </div>
 
             <div className={`tabcontent${activeTab === "Services" ? " active" : ""}`}>
-                <ServicesTab />
+                <ServicesTab
+                    services={services}
+                    setServices={setServices}
+                    save_Services={save_services}
+                />
             </div>
 
             <div className={`tabcontent${activeTab === "Customer" ? " active" : ""}`}>
@@ -64,7 +87,10 @@ export default function Tabs({activeTab, setActiveTab}: TabProps) {
             </div>
 
             <div className={`tabcontent${activeTab === "Invoice" ? " active" : ""}`}>
-                <InvoiceTab />
+                <InvoiceTab
+                    currency={invoice_currency}
+                    setCurrency={invoice_setCurrency}
+                />
             </div>
 
             <div className={`tabcontent${activeTab === "Payment" ? " active" : ""}`}>

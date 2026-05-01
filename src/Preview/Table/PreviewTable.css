@@ -1,0 +1,31 @@
+
+.preview-table-header,
+.preview-table-row {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 12px;
+    overflow: hidden;
+    gap: 10px;
+    padding: 10px;
+}
+
+.preview-table-cell {
+    display: flex;
+    align-items: center;
+    padding: 2px 6px;
+    min-width: 0;
+}
+
+.preview-table-header {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.Preview-table hr {
+    color: rgba(255,255,255,0.5);
+}
+
+.Preview-table {
+    font-size: 14px;
+}

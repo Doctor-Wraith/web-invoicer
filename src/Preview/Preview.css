@@ -1,0 +1,15 @@
+.totaling-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem
+}
+.Totaling {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+.total-row {
+    gap: 2rem;
+}

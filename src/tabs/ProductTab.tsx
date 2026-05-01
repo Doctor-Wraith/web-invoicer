@@ -2,25 +2,16 @@ import "../styles/ProductTab.css";
 import IconButton from "../custom components/IconButton.tsx";
 import ProductList from "../custom components/ProductList.tsx";
 import {type ProductInformation} from "../custom components/productRow/ProductRow.tsx";
-import {useState} from "react";
 
-const STORAGE_KEY = "products";
-
-const load_products = ():ProductInformation[] => {
-    try {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        return stored ? JSON.parse(stored) : [];
-    } catch {
-        return []
-    }
+interface ProductTabProps {
+    products: ProductInformation[];
+    setProducts: React.Dispatch<React.SetStateAction<ProductInformation[]>>;
+    save_products: (products: ProductInformation[]) => void;
 }
 
-const save_products = (products: ProductInformation[]) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
-}
 
-export default function ProductTab() {
-    const [products, setProducts] = useState<ProductInformation[]>(load_products);
+export default function ProductTab({products, setProducts, save_products}: ProductTabProps) {
+
 
     const handleAdd = () => {
         const added = [...products, {
