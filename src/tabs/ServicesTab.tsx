@@ -20,17 +20,17 @@ const save_products = (products: ProductInformation[]) => {
 }
 
 export default function ServicesTab() {
-    const [products, setProducts] = useState<ProductInformation[]>(load_services);
+    const [services, setServices] = useState<ProductInformation[]>(load_services);
 
     const handleAdd = () => {
-        const added = [...products, {
+        const added = [...services, {
             id: crypto.randomUUID(),
             name: "",
             modelNumber: "",
             amount: 0,
             cost: 0
         }];
-        setProducts(added);
+        setServices(added);
         save_products(added);
     }
 
@@ -46,10 +46,13 @@ export default function ServicesTab() {
                     onClick={handleAdd}
                 />
             </div>
+
+
+
             <div className="products-list-wrapper">
                 <ProductList
-                    products={products}
-                    setProducts={setProducts}
+                    products={services}
+                    setProducts={setServices}
                     mode={"service"}
                     onSave={save_products}
                 />
