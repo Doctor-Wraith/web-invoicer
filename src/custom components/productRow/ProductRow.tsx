@@ -1,7 +1,8 @@
 import React, {type CSSProperties, type JSX} from "react";
 import "./ProductRow.css"
-type Mode = "product" | "service";
 
+
+type Mode = "product" | "service";
 
 // The data
 export interface ProductInformation {
@@ -24,7 +25,9 @@ const baseCell: CSSProperties = {
     alignItems: "center",
     minWidth: 0,
     overflow: "hidden",
-    borderRight: "1px solid #d1d5db",
+
+    borderRight: "1px solid rgba(255,255,255,0.08)",
+
     fontWeight: 500,
     color: "white",
 };
@@ -32,14 +35,18 @@ const baseCell: CSSProperties = {
 const baseInput: CSSProperties = {
     width: "100%",
     height: "100%",
-    padding: "10px 12px",
+    padding: "8px 10px",
+
     border: "none",
     outline: "none",
+
     fontSize: "14px",
     fontFamily: "'DM Sans', system-ui, sans-serif",
+
     background: "transparent",
     boxSizing: "border-box",
     minWidth: 0,
+
     fontWeight: 500,
     color: "white",
 };
@@ -50,9 +57,17 @@ const styles: Record<string, CSSProperties> = {
         width: "100%",
         minWidth: 0,
         boxSizing: "border-box",
-        border: "1px solid #d1d5db",
-        borderRadius: "8px",
+
+        borderRadius: "12px",
         overflow: "hidden",
+
+        // Glass base
+        background: "rgba(255, 255, 255, 0.06)",
+        backdropFilter: "blur(14px)",
+        WebkitBackdropFilter: "blur(14px)",
+
+        border: "1px solid rgba(255, 255, 255, 0.12)",
+
         fontFamily: "'DM Sans', system-ui, sans-serif",
         fontSize: "14px",
     },
@@ -95,19 +110,22 @@ const styles: Record<string, CSSProperties> = {
 
     // Button
     deleteBtn: {
-        width: "44px",
+        width: "40px",
         flexShrink: 0,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "none",
+
+        background: "rgba(239, 68, 68, 0.5)", // stronger base
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
+
         border: "none",
+        borderLeft: "1px solid rgba(255,255,255,0.08)",
+
+        color: "#fecaca", // lighter red text
         cursor: "pointer",
-        color: "#ffffff",
-        backgroundColor: "#ef4444",
-        padding: "0 12px",
-        transition: "background 0.15s",
-        height: "100%",
+        transition: "all 0.15s ease",
     },
 };
 
@@ -149,7 +167,7 @@ export default function ProductRow({
     onDelete,
    }: ProductRowProps): React.JSX.Element {
     const amountLabel = mode === "service" ? "Hours" : "QTY";
-    const modelLabel = mode === "service" ? "Service code" : "Product code";
+    const modelLabel = "Code";
     const nameLabel = mode === "service" ? "Service name": "Product name";
     const costLabel = mode === "service" ? "Rate" : "Price";
 
@@ -158,9 +176,9 @@ export default function ProductRow({
     }
 
     return (
-        <div style={styles.row}>
+        <div style={styles.row} className="product-row">
             {/*  Name  */}
-            <div style={styles.cell}>
+            <div className="product-input" style={styles.cell}>
                 <input
                     style={styles.input}
                     type="text"
@@ -171,7 +189,7 @@ export default function ProductRow({
             </div>
 
             {/*  Model  */}
-            <div style={styles.modelCell}>
+            <div className="product-input" style={styles.modelCell}>
                 <input
                     style={styles.modelInput}
                     type="text"
@@ -182,7 +200,7 @@ export default function ProductRow({
             </div>
 
             {/*  Amount   */}
-            <div style={styles.numberCell}>
+            <div className="product-input" style={styles.numberCell}>
                 <button
                     className="spin-btn"
                     style={spinBtn}
@@ -208,9 +226,8 @@ export default function ProductRow({
                 </button>
             </div>
 
-
             {/*  Cost  */}
-            <div style={styles.numberCell}>
+            <div style={{ ...styles.numberCell, flex: 1.1 }} className="product-input">
                 <button
                     className="spin-btn"
                     style={spinBtn}
