@@ -3,7 +3,7 @@ import CustomerTab from "./CustomerTab"
 import InvoiceTab from "./InvoiceTab"
 import PaymentTab from "./PaymentTab"
 import CompanyTab from "./CompanyTab"
-import ProductSettings from "./ProductSettings.tsx";
+import ServicesTab from "./ServicesTab.tsx";
 import "../styles/Tabs.css"
 import {useEffect, useRef, useState} from "react";
 
@@ -12,7 +12,7 @@ interface TabProps {
     setActiveTab: (activeTab: string) => void;
 }
 
-const TABS = ["Products", "Settings", "Customer", "Invoice", "Payment", "Company"]
+const TABS = ["Products", "Services", "Customer", "Invoice", "Payment", "Company"]
 
 export default function Tabs({activeTab, setActiveTab}: TabProps) {
 
@@ -55,8 +55,8 @@ export default function Tabs({activeTab, setActiveTab}: TabProps) {
                 <ProductTab />
             </div>
 
-            <div className={`tabcontent${activeTab === "Settings" ? " active" : ""}`}>
-                <ProductSettings />
+            <div className={`tabcontent${activeTab === "Services" ? " active" : ""}`}>
+                <ServicesTab />
             </div>
 
             <div className={`tabcontent${activeTab === "Customer" ? " active" : ""}`}>
