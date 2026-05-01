@@ -7,14 +7,17 @@ import ProductSettings from "./ProductSettings.tsx";
 import "../styles/Tabs.css"
 import {useEffect, useRef, useState} from "react";
 
+interface TabProps {
+    activeTab: string;
+    setActiveTab: (activeTab: string) => void;
+}
+
 const TABS = ["Products", "Settings", "Customer", "Invoice", "Payment", "Company"]
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-export default function Tabs({activeTab, setActiveTab}) {
+export default function Tabs({activeTab, setActiveTab}: TabProps) {
 
     const [indicatorStyle, setIndicatorStyle] = useState({});
-    const tabRefs = useRef({});
+    const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
     useEffect(() => {
         const updateIndicator = () => {
@@ -23,7 +26,7 @@ export default function Tabs({activeTab, setActiveTab}) {
                 const parent = activeEl.parentElement;
                 const style = getComputedStyle(parent);
                 const paddingTop = parseFloat(style.paddingTop);
-                const paddingLeft = parseFloat(style.paddingLeft);
+                // const paddingLeft = parseFloat(style.paddingLeft);
 
                 setIndicatorStyle({
                     width: activeEl.offsetWidth,
@@ -45,7 +48,7 @@ export default function Tabs({activeTab, setActiveTab}) {
                 {TABS.map(tab => (
                     <button
                     key={tab}
-                    ref={el => (tabRefs.current[tab] = el)}
+                    ref={el => { tabRefs.current[tab] = el; }}
                     className={`tablinks${activeTab === tab ? " active" : ""}`}
                     onClick={() => setActiveTab(tab)}
                     >
