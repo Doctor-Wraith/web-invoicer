@@ -7,14 +7,15 @@
     border-radius: 16px;
     background-color: var(--accent-color);
     padding: 5px 20px;
-    flex: 1;
+    flex: none;
+    align-self: center
 }
 
 .tab-indicator {
     position: absolute;
     top: 5px;
     left: 0;
-    height: calc(100% - 10px);  /* respects your 5px top/bottom padding */
+    height: calc(100% - 10px);
     /* From https://css.glass */
     background: var(--select-color);
     /* border-radius: 16px; */
@@ -24,13 +25,18 @@
     border: 1px solid rgba(103, 7, 139, 0.62);
     border-radius: 8px;
     transition: transform 0.3s ease, width 0.3s ease;
-    pointer-events: none;  /* clicks pass through to buttons */
+    pointer-events: none;
 }
 
 .tab-wrapper{
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     padding-bottom: 10px;
     /*border-bottom: 1px solid white;*/
+    min-height: 0;
+    flex: 1;
+    overflow: hidden;
     height: 100%;
     /*background-color: red;*/
 }
@@ -62,14 +68,22 @@
     padding: 6px 0;
     border-top: none;
     height: 92%;
+    overflow: hidden;
+    min-height: 0;
 }
 
 .tabcontent.active {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .tab {
     display: flex;
+    flex-direction: column;
     height: 97%;
     padding: 5px 20px;
+    min-height: 0;
+    overflow: hidden;
+    width: 100%;
 }

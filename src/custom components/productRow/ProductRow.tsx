@@ -19,95 +19,81 @@ interface ProductRowProps {
     onDelete: (id: string) => void;
 }
 
+const baseCell: CSSProperties = {
+    display: "flex",
+    alignItems: "center",
+    minWidth: 0,
+    overflow: "hidden",
+    borderRight: "1px solid #d1d5db",
+};
+
+const baseInput: CSSProperties = {
+    width: "100%",
+    height: "100%",
+    padding: "10px 12px",
+    border: "none",
+    outline: "none",
+    fontSize: "14px",
+    fontFamily: "'DM Sans', system-ui, sans-serif",
+    background: "transparent",
+    boxSizing: "border-box",
+    minWidth: 0,
+};
+
 const styles: Record<string, CSSProperties> = {
     row: {
-        display: "grid",
-        gridTemplateColumns: "1fr 160px 140px 140px 44px",
-        gap: 0,
-        minWidth: 0,
+        display: "flex",
         width: "100%",
+        minWidth: 0,
         boxSizing: "border-box",
-        alignItems: "stretch",
         border: "1px solid #d1d5db",
         borderRadius: "8px",
         overflow: "hidden",
         fontFamily: "'DM Sans', system-ui, sans-serif",
         fontSize: "14px",
     },
+
+    // Cells
     cell: {
-        display: "flex",
-        alignItems: "center",
-        border: "1px solid #d1d5db",
-    },
-    input: {
-        width: "100%",
-        height: "100%",
-        padding: "10px 12px",
-        border: "none",
-        outline: "none",
-        fontSize: "14px",
-        fontFamily: "'DM Sans', system-ui, sans-serif",
-        backgroundColor: "transparent",
-        color: "inherit",
-        boxSizing: "border-box",
-    },
-    spinnerCell: {
-        display: "flex",
-        alignItems: "center",
-        border: "1px solid #d1d5db",
-        position: "relative",
-    },
-    spinnerInput: {
-        width: "100%",
-        height: "100%",
-        padding: "10px 12px",
-        border: "none",
-        outline: "none",
-        fontSize: "14px",
-        fontFamily: "'DM Sans', system-ui, sans-serif",
-        background: "transparent",
-        color: "#4f6ef7",
-        fontWeight: 500,
-        boxSizing: "border-box",
-    },
-    spinnerButtons: {
-        position: "absolute",
-        right: "6px",
-        display: "flex",
-        flexDirection: "column",
-        gap: "1px",
-    },
-    spinnerBtn: {
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-        padding: "0",
-        lineHeight: 1,
-        color: "#9ca3af",
-        fontSize: "10px",
-        display: "flex",
-        alignItems: "center",
+        ...baseCell,
+        flex: 2,
     },
     modelCell: {
-        display: "flex",
-        alignItems: "center",
-        borderRight: "1px solid #d1d5db",
+        ...baseCell,
+        flex: 1,
         background: "#f9fafb",
     },
-    modelInput:{
-        width: "100%",
-        height: "100%",
-        padding: "10px 12px",
-        border: "none",
-        outline: "none",
-        fontSize: "14px",
-        fontFamily: "'DM Sans', system-ui, sans-serif",
-        background: "transparent",
+    numberCell: {
+        ...baseCell,
+        flex: 1,
+    },
+
+    // Inputs
+    input: {
+        ...baseInput,
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        color: "inherit",
+        maxWidth: "100%",
+    },
+    modelInput: {
+        ...baseInput,
         color: "#4f6ef7",
         fontWeight: 500,
-        boxSizing: "border-box",
+        maxWidth: "100%",
     },
+    numberInput: {
+        ...baseInput,
+        color: "#4f6ef7",
+        fontWeight: 500,
+        maxWidth: "100%",
+    },
+
+    // Button
     deleteBtn: {
+        width: "44px",
+        flexShrink: 0,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -117,10 +103,9 @@ const styles: Record<string, CSSProperties> = {
         color: "#ef4444",
         padding: "0 12px",
         transition: "background 0.15s",
-        width: "100%",
         height: "100%",
     },
-}
+};
 
 const ChevronUp = (): JSX.Element => (
     <svg width="10" height="7" viewBox="0 0 10 7" fill="none">
@@ -182,31 +167,24 @@ export default function ProductRow({
             </div>
 
             {/*  Amount   */}
-            <div style={styles.spinnerCell}>
+            <div style={styles.numberCell}>
                 <input
                     className="no-spinner"
-                    style={styles.spinnerInput}
+                    style={styles.numberInput}
                     type="number"
                     min={0}
                     placeholder={amountLabel}
                     value={data.amount === 0 ? "" : data.amount}
-                    onChange={e=> update("amount", parseFloat(e.target.value) || 0)}
+                    onChange={e => update("amount", parseFloat(e.target.value) || 0)}
                 />
-                <div style={styles.spinnerButtons}>
-                    <button style={styles.spinnerBtn} onClick={() => update("amount", data.amount + 1)} tabIndex={-1}>
-                        <ChevronUp />
-                    </button>
-                    <button style={styles.spinnerBtn} onClick={() => update("amount", Math.max(0, data.amount - 1))} tabIndex={-1}>
-                        <ChevronDown />
-                    </button>
-                </div>
             </div>
 
+
             {/*  Cost  */}
-            <div style={styles.spinnerCell}>
+            <div style={styles.numberCell}>
                 <input
                     className="no-spinner"
-                    style={styles.spinnerInput}
+                    style={styles.numberInput}
                     type="number"
                     min={0}
                     step={0.01}
@@ -214,15 +192,8 @@ export default function ProductRow({
                     value={data.cost === 0 ? "" : data.cost}
                     onChange={e => update("cost", parseFloat(e.target.value) || 0)}
                 />
-                <div style={styles.spinnerButtons}>
-                    <button style={styles.spinnerBtn} onClick={() => update("cost", parseFloat((data.cost + 1).toFixed(2)))} tabIndex={-1}>
-                        <ChevronUp />
-                    </button>
-                    <button style={styles.spinnerBtn} onClick={() => update("cost", parseFloat(Math.max(0, data.cost - 1).toFixed(2)))} tabIndex={-1}>
-                        <ChevronDown />
-                    </button>
-                </div>
             </div>
+
 
             {/* Delete */}
             <button

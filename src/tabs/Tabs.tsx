@@ -23,15 +23,9 @@ export default function Tabs({activeTab, setActiveTab}: TabProps) {
         const updateIndicator = () => {
             const activeEl = tabRefs.current[activeTab];
             if (activeEl && activeEl.parentElement) {
-                const parent = activeEl.parentElement;
-                const style = getComputedStyle(parent);
-                const paddingTop = parseFloat(style.paddingTop);
-                // const paddingLeft = parseFloat(style.paddingLeft);
-
                 setIndicatorStyle({
-                    width: activeEl.offsetWidth,
-                    height: activeEl.offsetHeight,
-                    transform: `translate(${activeEl.offsetLeft}px, ${activeEl.offsetTop - paddingTop}px)`,
+                    width: activeEl.offsetWidth - 5,
+                    transform: `translateX(${activeEl.offsetLeft}px)`,
                 });
             }
         };
