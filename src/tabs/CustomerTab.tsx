@@ -1,5 +1,5 @@
 import "../styles/customer.css"
-import React, {useState} from "react";
+import {useState} from "react";
 
 export interface Customer {
     name: string;
@@ -12,7 +12,7 @@ export interface Customer {
 
 interface CustomerTabProps {
     customer: Customer;
-    setCustomer: React.Dispatch<React.SetStateAction<Customer>>;
+    setCustomer:(customer: Customer) => void;
 }
 
 const formatPhone = (value: string) => {

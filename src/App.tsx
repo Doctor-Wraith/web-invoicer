@@ -12,6 +12,7 @@ function App() {
   const STORAGE_KEY_SERVICES = "services";
   const STORAGE_KEY_PRODUCTS = "products";
   const STORAGE_KEY_ACTIVE_TAB = "activeTab";
+  const STORAGE_KEY_CUSTOMER = "customer";
 
   const load_services = ():ProductInformation[] => {
     try {
@@ -48,18 +49,29 @@ function App() {
     localStorage.setItem(STORAGE_KEY_ACTIVE_TAB, tab);
   }
 
+  const [customer, setCustomer] = useState<Customer>(() => {
+    const saved = localStorage.getItem(STORAGE_KEY_CUSTOMER)
+    return saved ? JSON.parse(saved) : {
+        name: "",
+        id: "",
+        address: "",
+        zip: "",
+        phone: "",
+        email: "",
+      }
+    }
+  )
+
+  const handleCustomerChange = (customer: Customer) => {
+    setCustomer(customer);
+    localStorage.setItem(STORAGE_KEY_CUSTOMER, JSON.stringify(customer));
+  }
+
+
   // Values
   const [services, setServices] = useState<ProductInformation[]>(load_services);
   const [products, setProducts] = useState<ProductInformation[]>(load_products);
   const [currency, setCurrency] = useState<Currency>({code:"ZAR", name:"South Africa"});
-  const [customer, setCustomer] = useState<Customer>({
-    name: "",
-    id: "",
-    address: "",
-    zip: "",
-    phone: "",
-    email: "",
-  });
 
   return (
     <>
@@ -81,7 +93,7 @@ function App() {
             invoice_currency={currency}
             invoice_setCurrency={(c:Currency) => setCurrency(c)}
             customer={customer}
-            setCustomer={setCustomer}
+            setCustomer={handleCustomerChange}
           />
 
         </div>

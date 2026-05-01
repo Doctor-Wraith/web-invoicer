@@ -21,7 +21,7 @@ interface TabProps {
     invoice_currency: Currency;
     invoice_setCurrency: (currency: Currency) => void;
     customer: Customer;
-    setCustomer: React.Dispatch<React.SetStateAction<Customer>>;
+    setCustomer: (customer: Customer) => void;
 }
 
 const TABS = ["Products", "Services", "Customer", "Invoice", "Payment", "Company"]
