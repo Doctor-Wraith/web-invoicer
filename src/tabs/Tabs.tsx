@@ -15,19 +15,29 @@ export default function Tabs({activeTab, setActiveTab}) {
 
     const [indicatorStyle, setIndicatorStyle] = useState({});
     const tabRefs = useRef({});
-    
+
     useEffect(() => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        const activeEl = tabRefs.current[activeTab];
-        if (activeEl) {
-            setIndicatorStyle({
-                width: activeEl.clientWidth,
-                transform: `translateX(${activeEl.offsetLeft}px)`
-            })
-        }
-    }, [activeTab])
-    
+        const updateIndicator = () => {
+            const activeEl = tabRefs.current[activeTab];
+            if (activeEl && activeEl.parentElement) {
+                const parent = activeEl.parentElement;
+                const style = getComputedStyle(parent);
+                const paddingTop = parseFloat(style.paddingTop);
+                const paddingLeft = parseFloat(style.paddingLeft);
+
+                setIndicatorStyle({
+                    width: activeEl.offsetWidth,
+                    height: activeEl.offsetHeight,
+                    transform: `translate(${activeEl.offsetLeft}px, ${activeEl.offsetTop - paddingTop}px)`,
+                });
+            }
+        };
+
+        updateIndicator();
+        window.addEventListener("resize", updateIndicator);
+        return () => window.removeEventListener("resize", updateIndicator);
+    }, [activeTab]);
+
     return (
         <div className="tab-wrapper">
             <div className="tabs">

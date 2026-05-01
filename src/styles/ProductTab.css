@@ -9,8 +9,51 @@
     max-height: 5%;
     width: 100%;
     /*background-color: red;*/
+    position: relative;
 }
 
 .products-title h3 {
     margin: 0;
+    left: 0;
+    position: absolute;
 }
+
+.add-product {
+    padding: 5px;
+    position: absolute;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    right: 0;
+    float: right;
+    cursor: pointer;
+    color: white;
+
+    background: var(--select-color);
+    /* border-radius: 16px; */
+    box-shadow: 3px 2px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(103, 7, 139, 0.62);
+    border-radius: 8px;
+
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease, border-color 0.15s ease;
+}
+
+.add-product span {
+    margin-left: 0;
+}
+
+.add-product:active {
+    filter: brightness(1) !important;
+    transform: translateY(0px) scale(0.95) !important;
+    box-shadow: 1px 1px rgba(0, 0, 0, 0.1) !important;
+}
+.add-product:hover {
+    filter: brightness(1.15);
+    border-color: rgba(103, 7, 139, 0.9);
+    box-shadow: 4px 3px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
