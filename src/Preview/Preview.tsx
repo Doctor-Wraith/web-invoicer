@@ -4,15 +4,17 @@ import Total from "./Total/Total.tsx";
 import {type PercentFlat} from "../tabs/InvoiceTab"
 import type {Currency} from "../data/currencies.tsx";
 import "./Preview.css"
+import type {Customer} from "../tabs/CustomerTab.tsx";
 
 interface PreviewProps {
     products: ProductInformation[]
     services: ProductInformation[]
     currency: Currency
+    customer: Customer
 }
 
 export default function Preview({
-        products, services, currency}: PreviewProps) {
+        products, services, currency, customer}: PreviewProps) {
 
     let subTotal = 0;
     products.forEach(product => {subTotal += product.amount * product.cost})
@@ -35,6 +37,30 @@ export default function Preview({
             <div className="title-card">
                 <h2>Preview</h2>
             </div>
+
+            {/* Customer */}
+            <div className="customer-preview">
+                <label>Issued to:</label><br/>
+                <label>{customer.name ? customer.name : "Customer Name"}</label><br/>
+                {(customer.id ) && (
+                    <label>ID: {customer.id}<br/></label>
+                )}
+                {customer.address && (
+                    <label>Address: {customer.address}<br/></label>
+                )}
+                {customer.zip && (
+                    <label>Zip: {customer.zip}<br/></label>
+                )}
+                {customer.phone && (
+                    <label>Phone: {customer.phone}<br/></label>
+                )}
+                {customer.email && (
+                    <label>Email: {customer.email}<br/></label>
+                )}
+                <hr style={{ color: "rgba(255,255,255,0.5)"}}></hr>
+            </div>
+
+            {/*Products and services*/}
             <div className="preview-table">
                 {(products.length > 0) && (
                     <section>
@@ -54,8 +80,16 @@ export default function Preview({
                         />
                     </section>
                 )}
+
+                {(services.length === 0) && (products.length === 0) && (
+                    <section style={{textAlign: "center", width: "100%"}}>
+                        <h4 style={{alignItems: "center", width: "100%"}}>No Products or services</h4>
+                        <hr style={{ color: "rgba(255,255,255,0.5)"}}></hr>
+                    </section>
+                )}
             </div>
 
+            {/*Totals*/}
             {(subTotal > 0) && (
                 <div className="totaling-wrapper">
                     <Total

@@ -1,5 +1,5 @@
 import ProductTab from "./ProductTab"
-import CustomerTab from "./CustomerTab"
+import CustomerTab, {type Customer} from "./CustomerTab"
 import InvoiceTab from "./InvoiceTab"
 import PaymentTab from "./PaymentTab"
 import CompanyTab from "./CompanyTab"
@@ -20,6 +20,8 @@ interface TabProps {
     save_products: (products: ProductInformation[]) => void;
     invoice_currency: Currency;
     invoice_setCurrency: (currency: Currency) => void;
+    customer: Customer;
+    setCustomer: React.Dispatch<React.SetStateAction<Customer>>;
 }
 
 const TABS = ["Products", "Services", "Customer", "Invoice", "Payment", "Company"]
@@ -29,6 +31,7 @@ export default function Tabs({
      services, setServices, save_services,
     products, setProducts, save_products,
     invoice_currency, invoice_setCurrency,
+    customer, setCustomer
 }: TabProps) {
 
     const [indicatorStyle, setIndicatorStyle] = useState({});
@@ -83,7 +86,10 @@ export default function Tabs({
             </div>
 
             <div className={`tabcontent${activeTab === "Customer" ? " active" : ""}`}>
-                <CustomerTab />
+                <CustomerTab
+                    customer={customer}
+                    setCustomer={setCustomer}
+                />
             </div>
 
             <div className={`tabcontent${activeTab === "Invoice" ? " active" : ""}`}>
