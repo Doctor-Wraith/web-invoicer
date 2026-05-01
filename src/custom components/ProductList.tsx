@@ -7,16 +7,21 @@ interface ProductListProps {
     mode?: Mode;
     products: ProductInformation[];
     setProducts: React.Dispatch<React.SetStateAction<ProductInformation[]>>;
+    onSave: (products: ProductInformation[]) => void;
 }
 
-export default function ProductList({mode = "product" , products, setProducts}: ProductListProps) {
+export default function ProductList({mode = "product" , products, setProducts, onSave}: ProductListProps) {
 
     const handleChange = (updated: ProductInformation) => {
-        setProducts(prev => prev.map(p => p.id === updated.id ? updated: p));
+        const next = products.map(p => p.id === updated.id ? updated : p);
+        setProducts(next);
+        onSave(next);
     }
 
-    const handelDelete = (id: string) => {
-        setProducts(prev => prev.filter(p => p.id !== id));
+    const handleDelete = (id: string) => {
+        const next = products.filter(p => p.id !== id);
+        setProducts(next);
+        onSave(next);
     }
 
     return (
@@ -27,7 +32,7 @@ export default function ProductList({mode = "product" , products, setProducts}: 
                     data={product}
                     mode={mode}
                     onChange={handleChange}
-                    onDelete={handelDelete}
+                    onDelete={handleDelete}
                 />
             ))}
         </div>
