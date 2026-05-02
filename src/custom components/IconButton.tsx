@@ -1,7 +1,8 @@
-import {type JSX, useState} from "react";
+import {useState} from "react";
 import * as React from "react";
+import {AddIcon} from "../assets/icons.tsx";
 
-type Variant = "primary" | "outline" | "accent" | "ghost" | "glass";
+type Variant = "primary" | "outline" | "accent" | "ghost" | "glass" | "danger_glass";
 type Size = "default" | "small" | "icon";
 
 interface IconButton {
@@ -16,16 +17,10 @@ interface IconButton {
 
 }
 
-const PlusIcon= (): JSX.Element  => {
-    return <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
-    </svg>;
-};
-
 export default function IconButton({
         onClick,
         label = "Button",
-        icon: Icon = PlusIcon,
+        icon: Icon = AddIcon,
         variant = "primary",
         size = "default",
         disabled = false,
@@ -91,6 +86,16 @@ export default function IconButton({
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
             border: "1px solid rgba(255, 255, 255, 0.2)",
+            padding,
+        },
+        danger_glass: {
+            // From https://css.glass
+            background: "rgba(255, 0, 0, 0.2)",
+            borderRadius: "16px",
+            boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blue(20px)",
+            border: "1px solid rgba(255, 0, 0, 0.3)",
             padding,
         }
     };

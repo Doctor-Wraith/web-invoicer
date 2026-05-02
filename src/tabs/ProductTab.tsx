@@ -2,6 +2,8 @@ import "../styles/ProductTab.css";
 import IconButton from "../custom components/IconButton.tsx";
 import ProductList from "../custom components/ProductList.tsx";
 import {type ProductInformation} from "../custom components/productRow/ProductRow.tsx";
+import React from "react";
+import {TrashIcon} from "../assets/icons.tsx";
 
 interface ProductTabProps {
     products: ProductInformation[];
@@ -25,17 +27,29 @@ export default function ProductTab({products, setProducts, save_products}: Produ
         save_products(added);
     }
 
+    const handleDeleteAll = () => {
+        setProducts([]);
+        save_products([])
+    }
 
     return (
         <div className="tab product-tab" style={{width:'100%'}}>
             <div className="products-title">
                 <h3>Products</h3>
 
-                <IconButton
-                    label="Add"
-                    variant="glass"
-                    onClick={handleAdd}
-                />
+                <div style={{gap: "8px", display: "inline-flex"}}>
+                    <IconButton
+                        variant="danger_glass"
+                        label="Delete All"
+                        onClick={handleDeleteAll}
+                        icon={TrashIcon}
+                    />
+                    <IconButton
+                        label="Add"
+                        variant="glass"
+                        onClick={handleAdd}
+                    />
+                </div>
             </div>
             <hr/>
             <div className="products-list-wrapper-outer">

@@ -1,0 +1,15 @@
+import {type JSX} from "react";
+
+
+export const TrashIcon = (): JSX.Element => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M2 4h12M5 4V3a1 1 0 011-1h4a1 1 0 011 1v1M6 7v5M10 7v5M3 4l1 9a1 1 0 001 1h6a1 1 0 001-1l1-9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+);
+
+export const AddIcon = (): JSX.Element => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+    </svg>
+)
+

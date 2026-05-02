@@ -26,6 +26,7 @@ export default function ProductList({mode = "product" , products, setProducts, o
         onSave(next);
     }
 
+
     return (
         <>
             <TableHeader

@@ -23,17 +23,28 @@ export default function ServicesTab({services, setServices, save_Services}: Serv
         save_Services(added);
     }
 
+    const handleDeleteAll = () => {
+        setServices([]);
+        save_Services([])
+    }
 
     return (
         <div className="tab product-tab" style={{width:'100%'}}>
             <div className="products-title">
                 <h3>Services</h3>
 
-                <IconButton
-                    label="Add"
-                    variant="glass"
-                    onClick={handleAdd}
-                />
+                <div style={{gap: "8px", display: "inline-flex"}}>
+                    <IconButton
+                        variant="danger_glass"
+                        label=""
+                        onClick={handleDeleteAll}
+                    />
+                    <IconButton
+                        label="Add"
+                        variant="glass"
+                        onClick={handleAdd}
+                    />
+                </div>
             </div>
             <hr/>
 

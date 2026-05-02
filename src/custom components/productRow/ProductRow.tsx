@@ -1,6 +1,7 @@
-import React, {type CSSProperties, type JSX} from "react";
+import React, {type CSSProperties} from "react";
 import "./ProductRow.css"
 import {productColumns} from "../tableColumns.ts";
+import {TrashIcon} from "../../assets/icons.tsx";
 
 type Mode = "product" | "service";
 
@@ -154,11 +155,6 @@ const spinBtn: CSSProperties = {
     transition: "all 0.15s ease",
 };
 
-const TrashIcon = (): JSX.Element => (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M2 4h12M5 4V3a1 1 0 011-1h4a1 1 0 011 1v1M6 7v5M10 7v5M3 4l1 9a1 1 0 001 1h6a1 1 0 001-1l1-9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-);
 
 
 export default function ProductRow({
