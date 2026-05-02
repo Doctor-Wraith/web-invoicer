@@ -1,0 +1,24 @@
+.invoice-number-input{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.invoice-item {
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    gap: 8px
+}
+
+.Invoice-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.Invoice-dates {
+    display: flex;
+    justify-content: space-between;
+}

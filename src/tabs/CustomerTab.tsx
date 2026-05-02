@@ -47,7 +47,9 @@ export default function CustomerTab({customer, setCustomer}:CustomerTabProps) {
     const isValidPhone = (phone: string) => /^(\+\d{1,3} )?\(\d{3}\) \d{3}-\d{4}$/.test(phone) && (phone.length <= 19);
 
     return (
-        <div className="customer-tab">
+        <div className="tab customer-tab" style={{width:'100%'}}>
+            <h3>Customer Details:</h3>
+            <hr/>
             <div className="customer-field-wrapper">
                 <div className="customer-field">
                     <label htmlFor="customer_name">Customer Name</label>

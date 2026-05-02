@@ -50,7 +50,7 @@ export default function Total({subTotal, discount, tax, shipping, currency}: Tot
                     <span>{currency.code} {taxFormated}</span>
                 </div>
             )}
-            <hr></hr>
+            <hr style={{color: "rgba(255,255,255,0.5)", width: "100%"}}></hr>
             <div className="total-row total">
                 <span>Total:</span>
                 <span>{currency.code} {totalFormatted}</span>

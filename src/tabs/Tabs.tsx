@@ -1,13 +1,12 @@
 import ProductTab from "./ProductTab"
 import CustomerTab, {type Customer} from "./CustomerTab"
-import InvoiceTab from "./InvoiceTab"
+import InvoiceTab, {type InvoiceStore} from "./InvoiceTab"
 import PaymentTab from "./PaymentTab"
 import CompanyTab from "./CompanyTab"
 import ServicesTab from "./ServicesTab.tsx";
 import "../styles/Tabs.css"
 import React, {useEffect, useRef, useState} from "react";
 import type {ProductInformation} from "../custom components/productRow/ProductRow.tsx";
-import {type Currency} from "../data/currencies.tsx";
 
 interface TabProps {
     activeTab: string;
@@ -18,8 +17,7 @@ interface TabProps {
     products: ProductInformation[];
     setProducts: React.Dispatch<React.SetStateAction<ProductInformation[]>>;
     save_products: (products: ProductInformation[]) => void;
-    invoice_currency: Currency;
-    invoice_setCurrency: (currency: Currency) => void;
+    invoice_store: InvoiceStore;
     customer: Customer;
     setCustomer: (customer: Customer) => void;
 }
@@ -30,7 +28,7 @@ export default function Tabs({
      activeTab, setActiveTab,
      services, setServices, save_services,
     products, setProducts, save_products,
-    invoice_currency, invoice_setCurrency,
+    invoice_store,
     customer, setCustomer
 }: TabProps) {
 
@@ -94,8 +92,7 @@ export default function Tabs({
 
             <div className={`tabcontent${activeTab === "Invoice" ? " active" : ""}`}>
                 <InvoiceTab
-                    currency={invoice_currency}
-                    setCurrency={invoice_setCurrency}
+                    store={invoice_store}
                 />
             </div>
 

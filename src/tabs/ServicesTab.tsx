@@ -25,7 +25,7 @@ export default function ServicesTab({services, setServices, save_Services}: Serv
 
 
     return (
-        <div className="tab product-tab">
+        <div className="tab product-tab" style={{width:'100%'}}>
             <div className="products-title">
                 <h3>Services</h3>
 
@@ -35,7 +35,7 @@ export default function ServicesTab({services, setServices, save_Services}: Serv
                     onClick={handleAdd}
                 />
             </div>
-
+            <hr/>
 
 
             <div className="products-list-wrapper">

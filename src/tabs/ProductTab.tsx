@@ -27,7 +27,7 @@ export default function ProductTab({products, setProducts, save_products}: Produ
 
 
     return (
-        <div className="tab product-tab">
+        <div className="tab product-tab" style={{width:'100%'}}>
             <div className="products-title">
                 <h3>Products</h3>
 
@@ -37,6 +37,7 @@ export default function ProductTab({products, setProducts, save_products}: Produ
                     onClick={handleAdd}
                 />
             </div>
+            <hr/>
             <div className="products-list-wrapper-outer">
                 <ProductList
                     products={products}
