@@ -67,13 +67,23 @@ export default function InvoiceTab({store}: InvoiceTabProps) {
     const [indicatorStyle, setIndicatorStyle] = useState<React.CSSProperties>({})
     const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({})
 
+    const tabContainerRef = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
-        const activeEl = tabRefs.current[activeSubTab];
-        if (activeEl) {
-            setIndicatorStyle({
-                width: activeEl.offsetWidth - 5,
-                transform: `translateX(${activeEl.offsetLeft}px)`
-            });
+        const updateIndicator = () => {
+            const activeEl = tabRefs.current[activeSubTab];
+            if (activeEl) {
+                setIndicatorStyle({
+                    width: activeEl.offsetWidth - 5,
+                    transform: `translateX(${activeEl.offsetLeft}px)`
+                });
+            }
+        }
+        updateIndicator()
+
+        const observer = new ResizeObserver(updateIndicator);
+        if (tabContainerRef.current) {
+            observer.observe(tabContainerRef.current);
         }
     }, [activeSubTab])
 
@@ -89,6 +99,7 @@ export default function InvoiceTab({store}: InvoiceTabProps) {
             <div className="Invoice-information-tab">
 
                     <div className="tabs"
+                         ref={tabContainerRef}
                          style={{
                              marginBottom: 16,
                              display: "flex",
@@ -113,6 +124,7 @@ export default function InvoiceTab({store}: InvoiceTabProps) {
                                 {tab}
                             </button>
                         ))}
+
                     </div>
                 <hr/>
 
