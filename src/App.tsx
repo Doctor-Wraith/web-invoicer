@@ -183,6 +183,7 @@ function App() {
               services={services}
               products={products}
               customer={customer}
+              invoiceDetails={savedInvoice}
           />
         </div>
       </div>
