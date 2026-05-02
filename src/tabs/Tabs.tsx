@@ -21,7 +21,10 @@ interface TabProps {
     customer: Customer;
     setCustomer: (customer: Customer) => void;
     confirm: (message: string) => Promise<unknown>;
+    prompt:  (mode: Mode) => Promise<ProductInformation | null>
 }
+
+type Mode = "product" | "service";
 
 const TABS = ["Products", "Services", "Customer", "Invoice", "Payment", "Company"]
 
@@ -31,7 +34,7 @@ export default function Tabs({
     products, setProducts, save_products,
     invoice_store,
     customer, setCustomer,
-    confirm
+    confirm, prompt
 }: TabProps) {
 
     const [indicatorStyle, setIndicatorStyle] = useState({});
@@ -75,6 +78,7 @@ export default function Tabs({
                     setProducts={setProducts}
                     save_products={save_products}
                     confirm={confirm}
+                    prompt={prompt}
                 />
             </div>
 
@@ -84,6 +88,7 @@ export default function Tabs({
                     setServices={setServices}
                     save_Services={save_services}
                     confirm={confirm}
+                    prompt={prompt}
                 />
             </div>
 

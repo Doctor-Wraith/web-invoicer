@@ -6,6 +6,7 @@ import Preview from "./Preview/Preview.tsx";
 import {type Customer} from "./tabs/CustomerTab.tsx";
 import type {InvoiceDetails, InvoiceStore} from "./tabs/InvoiceTab.tsx";
 import {useConfirm} from "./custom components/useConfirm.tsx";
+import {useProductForm} from "./custom components/useProductForm.tsx";
 
 
 function App() {
@@ -155,11 +156,13 @@ function App() {
   //endregion
 
   const {confirm, ConfirmDialog} = useConfirm();
+  const { prompt, ProductFormDialog} = useProductForm();
 
   return (
     <>
       <div className="app">
         <ConfirmDialog />
+        {ProductFormDialog}
         <div className="glass user-input main-panel">
           <div className="title-card">
             <h2>Invoice Details</h2>
@@ -177,6 +180,7 @@ function App() {
             customer={customer}
             setCustomer={handleCustomerChange}
             confirm={confirm}
+            prompt={prompt}
           />
 
         </div>

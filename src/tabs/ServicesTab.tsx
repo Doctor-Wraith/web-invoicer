@@ -10,19 +10,18 @@ interface ServicesTabProps {
     setServices: React.Dispatch<React.SetStateAction<ProductInformation[]>>;
     save_Services: (products: ProductInformation[]) => void;
     confirm: (message: string) => Promise<unknown>;
+    prompt:  (mode: Mode) => Promise<ProductInformation | null>
 }
 
-export default function ServicesTab({services, setServices, save_Services, confirm}: ServicesTabProps) {
-    const handleAdd = () => {
-        const added = [...services, {
-            id: crypto.randomUUID(),
-            name: "",
-            modelNumber: "",
-            amount: 0,
-            cost: 0
-        }];
-        setServices(added);
-        save_Services(added);
+type Mode = "product" | "service"
+
+export default function ServicesTab({services, setServices, save_Services, confirm, prompt}: ServicesTabProps) {
+    const handleAdd = async () => {
+        const product = await prompt("service")
+        if (!product) return;
+        const added = [...services, product];
+        setServices(added)
+        save_Services(added)
     }
 
     const handleDeleteAll = async () => {

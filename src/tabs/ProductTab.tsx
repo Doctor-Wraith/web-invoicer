@@ -11,22 +11,20 @@ interface ProductTabProps {
     setProducts: React.Dispatch<React.SetStateAction<ProductInformation[]>>;
     save_products: (products: ProductInformation[]) => void;
     confirm: (message: string) => Promise<unknown>;
+    prompt:  (mode: Mode) => Promise<ProductInformation | null>
 }
 
+type Mode = "product" | "service"
 
-export default function ProductTab({products, setProducts, save_products, confirm}: ProductTabProps) {
+export default function ProductTab({products, setProducts, save_products, confirm, prompt}: ProductTabProps) {
 
 
-    const handleAdd = () => {
-        const added = [...products, {
-            id: crypto.randomUUID(),
-            name: "",
-            modelNumber: "",
-            amount: 0,
-            cost: 0
-        }];
-        setProducts(added);
-        save_products(added);
+    const handleAdd = async () => {
+        const product = await prompt("product")
+        if (!product) return;
+        const added = [...products, product];
+        setProducts(added)
+        save_products(added)
     }
 
     const handleDeleteAll = async () => {
