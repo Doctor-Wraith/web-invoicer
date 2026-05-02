@@ -5,14 +5,16 @@ import {type ProductInformation} from "../custom components/productRow/ProductRo
 import React from "react";
 import {TrashIcon} from "../assets/icons.tsx";
 
+
 interface ProductTabProps {
     products: ProductInformation[];
     setProducts: React.Dispatch<React.SetStateAction<ProductInformation[]>>;
     save_products: (products: ProductInformation[]) => void;
+    confirm: (message: string) => Promise<unknown>;
 }
 
 
-export default function ProductTab({products, setProducts, save_products}: ProductTabProps) {
+export default function ProductTab({products, setProducts, save_products, confirm}: ProductTabProps) {
 
 
     const handleAdd = () => {
@@ -27,9 +29,12 @@ export default function ProductTab({products, setProducts, save_products}: Produ
         save_products(added);
     }
 
-    const handleDeleteAll = () => {
-        setProducts([]);
-        save_products([])
+    const handleDeleteAll = async () => {
+        const ok = await confirm("Are you sure you want to Delete All?");
+        if (ok) {
+            setProducts([]);
+            save_products([])
+        }
     }
 
     return (

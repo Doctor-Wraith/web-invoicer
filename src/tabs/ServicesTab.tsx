@@ -3,14 +3,16 @@ import IconButton from "../custom components/IconButton.tsx";
 import ProductList from "../custom components/ProductList.tsx";
 import {type ProductInformation} from "../custom components/productRow/ProductRow.tsx";
 import React from "react";
+import {TrashIcon} from "../assets/icons.tsx";
 
 interface ServicesTabProps {
     services: ProductInformation[];
     setServices: React.Dispatch<React.SetStateAction<ProductInformation[]>>;
     save_Services: (products: ProductInformation[]) => void;
+    confirm: (message: string) => Promise<unknown>;
 }
 
-export default function ServicesTab({services, setServices, save_Services}: ServicesTabProps) {
+export default function ServicesTab({services, setServices, save_Services, confirm}: ServicesTabProps) {
     const handleAdd = () => {
         const added = [...services, {
             id: crypto.randomUUID(),
@@ -23,9 +25,12 @@ export default function ServicesTab({services, setServices, save_Services}: Serv
         save_Services(added);
     }
 
-    const handleDeleteAll = () => {
-        setServices([]);
-        save_Services([])
+    const handleDeleteAll = async () => {
+        const ok = await confirm("Are you sure you want to Delete All?");
+        if (ok) {
+            setServices([]);
+            save_Services([])
+        }
     }
 
     return (
@@ -36,8 +41,9 @@ export default function ServicesTab({services, setServices, save_Services}: Serv
                 <div style={{gap: "8px", display: "inline-flex"}}>
                     <IconButton
                         variant="danger_glass"
-                        label=""
+                        label="Delete All"
                         onClick={handleDeleteAll}
+                        icon={TrashIcon}
                     />
                     <IconButton
                         label="Add"

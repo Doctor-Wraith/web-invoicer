@@ -5,6 +5,7 @@ import type {ProductInformation} from "./custom components/productRow/ProductRow
 import Preview from "./Preview/Preview.tsx";
 import {type Customer} from "./tabs/CustomerTab.tsx";
 import type {InvoiceDetails, InvoiceStore} from "./tabs/InvoiceTab.tsx";
+import {useConfirm} from "./custom components/useConfirm.tsx";
 
 
 function App() {
@@ -132,15 +133,15 @@ function App() {
   }
 
   const invoiceStore: InvoiceStore = {
-    invoiceNumber,  setInvoiceNumber:   handleInvoiceChange(setInvoiceNumber, "invoiceNumber"),
-    paymentTerms,   setPaymentTerms:    handleInvoiceChange(setPaymentTerms,  "paymentTerms"),
-    issueDate,       setIssueDate:      handleInvoiceChange(setIssueDate, "issueDate"),
-    dueDate,         setDueDate:        handleInvoiceChange(setDueDate, "dueDate"),
-    endMessage,      setEndMessage:     handleInvoiceChange(setEndMessage, "endMessage"),
-    currency,        setCurrency:       handleInvoiceChange(setCurrency, "currency"),
-    discount,        setDiscount:       handleInvoiceChange(setDiscount, "discount"),
-    tax,             setTax:            handleInvoiceChange(setTax, "tax"),
-    shipping,        setShipping:       handleInvoiceChange(setShipping, "shipping"),
+    invoiceNumber,    setInvoiceNumber:   handleInvoiceChange(setInvoiceNumber, "invoiceNumber"),
+    paymentTerms,     setPaymentTerms:    handleInvoiceChange(setPaymentTerms,  "paymentTerms"),
+    issueDate,        setIssueDate:       handleInvoiceChange(setIssueDate,     "issueDate"),
+    dueDate,          setDueDate:         handleInvoiceChange(setDueDate,       "dueDate"),
+    endMessage,       setEndMessage:      handleInvoiceChange(setEndMessage,    "endMessage"),
+    currency,         setCurrency:        handleInvoiceChange(setCurrency,      "currency"),
+    discount,         setDiscount:        handleInvoiceChange(setDiscount,      "discount"),
+    tax,              setTax:             handleInvoiceChange(setTax,           "tax"),
+    shipping,         setShipping:        handleInvoiceChange(setShipping,      "shipping"),
   }
 
   //endregion
@@ -153,14 +154,16 @@ function App() {
 
   //endregion
 
+  const {confirm, ConfirmDialog} = useConfirm();
+
   return (
     <>
       <div className="app">
+        <ConfirmDialog />
         <div className="glass user-input main-panel">
           <div className="title-card">
             <h2>Invoice Details</h2>
           </div>
-
           <Tabs
             activeTab={activeTab}
             setActiveTab={handleTabChange}
@@ -173,6 +176,7 @@ function App() {
             invoice_store={invoiceStore}
             customer={customer}
             setCustomer={handleCustomerChange}
+            confirm={confirm}
           />
 
         </div>
