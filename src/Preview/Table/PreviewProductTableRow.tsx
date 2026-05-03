@@ -27,7 +27,7 @@ export default function PreviewProductTableRow({item, columns, currency}: TableR
                 if (col.key === "amount") {
                     return (
                         <div className="preview-table-cell" key={col.key} style={{flex: col.flex}}>
-                            {currency.code} {item.amount}
+                            {item.amount}
                         </div>
                     )
                 }

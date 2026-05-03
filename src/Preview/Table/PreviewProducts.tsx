@@ -27,7 +27,7 @@ export default function PreviewProducts({mode, items, currency}: PreviewProps) {
         },
         {
             key: "cost",
-            label: mode === "product" ? "Price" : "Rate (/Hour)",
+            label: mode === "product" ? "Price" : "Rate",
             flex: 1,
         },
         {

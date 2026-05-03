@@ -5,6 +5,7 @@ import "../styles/invoiceTab.css"
 import DatePicker from "../custom components/DatePicker.tsx";
 import { useState, useRef, useEffect} from "react";
 import ToggleButton from "../custom components/ToggleButton.tsx";
+import ButtonSpinEdit from "../custom components/buttonSpinEdit/ButtonSpinEdit.tsx";
 
 export type Type = "percent" | "flat"
 
@@ -85,6 +86,8 @@ export default function InvoiceTab({store}: InvoiceTabProps) {
         if (tabContainerRef.current) {
             observer.observe(tabContainerRef.current);
         }
+
+        return () => observer.disconnect();
     }, [activeSubTab])
 
     function generate_invoice_number() : void {
@@ -204,27 +207,21 @@ export default function InvoiceTab({store}: InvoiceTabProps) {
                         <div className="invoice-item">
                             <label htmlFor="discount-amount">Discount</label>
                             <div style={{ display: "flex", gap: 8 , width:"100%"}}>
-                                <input
-                                    style={{flex: 1}}
-                                    id="discount-amount"
-                                    type="number"
-                                    min={0}
-                                    placeholder="0"
+                                <ButtonSpinEdit
                                     value={discount.amount}
-                                    max={discount.kind === "percent" ? 100 : undefined}
-                                    onChange={(e) => {
-                                        const value = e.target.value;
-                                        if (value === "") {
-                                            setDiscount({...discount, amount: 0})
-                                            return
-                                        }
-                                        let num = parseFloat(value);
+                                    onChange={(value) => {
+                                        let num = value;
 
                                         if (discount.kind === "percent") {
                                             num = Math.min(num, 100);
                                         }
                                         setDiscount({...discount, amount: num})
                                     }}
+                                    min={0}
+                                    max={discount.kind === "percent" ? 100 : Infinity}
+                                    step={0.5}
+                                    placeholder="Discount"
+                                    style={{flex:1}}
                                 />
                                 <ToggleButton<Type>
                                     value={discount.kind}
@@ -240,31 +237,21 @@ export default function InvoiceTab({store}: InvoiceTabProps) {
                         <div className="invoice-item">
                             <label htmlFor="tax-amount">Tax</label>
                             <div style={{ display: "flex", gap: 8, width:"100%"}}>
-                                <input
-                                    style={{flex:1}}
-                                    id="tax-amount"
-                                    type="number"
-                                    min={0}
-                                    placeholder="0"
-                                    max={tax.kind === "percent" ? 100 : undefined}
+                                <ButtonSpinEdit
                                     value={tax.amount}
-                                    onChange={(e) => {
-                                        const value = e.target.value;
-
-                                        if (value === "") {
-                                            setTax({...tax, amount: 0});
-                                            return;
-                                        }
-
-                                        let num = parseFloat(value)
+                                    onChange={(value) => {
+                                        let num = value;
 
                                         if (tax.kind === "percent") {
-                                            num = Math.min(num, 100)
+                                            num = Math.min(num, 100);
                                         }
-
-                                        setTax({...tax, amount: num});
-
+                                        setTax({...tax, amount: num})
                                     }}
+                                    min={0}
+                                    max={tax.kind === "percent" ? 100 : Infinity}
+                                    step={0.5}
+                                    placeholder="Tax"
+                                    style={{flex:1}}
                                 />
                                 <ToggleButton<Type>
                                     value={tax.kind}
@@ -279,13 +266,21 @@ export default function InvoiceTab({store}: InvoiceTabProps) {
 
                         <div className="invoice-item">
                             <label htmlFor="shipping-amount">Shipping</label>
-                            <input
-                                id="shipping-amount"
-                                type="number"
+                            {/*<input*/}
+                            {/*    id="shipping-amount"*/}
+                            {/*    type="number"*/}
+                            {/*    min={0}*/}
+                            {/*    placeholder="0.00"*/}
+                            {/*    value={shipping}*/}
+                            {/*    onChange={(e) => setShipping(parseFloat(e.target.value) || 0)}*/}
+                            {/*/>*/}
+                            <ButtonSpinEdit
+                                style={{width:'100%'}}
                                 min={0}
-                                placeholder="0.00"
                                 value={shipping}
-                                onChange={(e) => setShipping(parseFloat(e.target.value) || 0)}
+                                placeholder='0.00'
+                                step={0.5}
+                                onChange={(updated) => {setShipping(updated)}}
                             />
                         </div>
                     </div>

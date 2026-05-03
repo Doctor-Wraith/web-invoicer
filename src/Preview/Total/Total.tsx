@@ -12,10 +12,10 @@ interface TotalProps {
 
 export default function Total({subTotal, discount, tax, shipping, currency}: TotalProps) {
     // Math
-    const discountAmount: number = discount.kind === "flat" ? discount.amount : subTotal * discount.amount;
+    const discountAmount: number = discount.kind === "flat" ? discount.amount : subTotal * discount.amount / 100;
     let total: number = (subTotal + shipping - discountAmount);
-    const taxAmount: number = tax.kind === "flat" ? tax.amount : total * tax.amount
-    total = total - taxAmount
+    const taxAmount: number = tax.kind === "flat" ? tax.amount : total * tax.amount / 100
+    total = total + taxAmount
 
     // Formating
     const discountAmountFormatted = discountAmount.toFixed(2);

@@ -1,7 +1,7 @@
 import type {ProductInformation} from "../custom components/productRow/ProductRow.tsx";
 import PreviewProducts from "./Table/PreviewProducts.tsx";
 import Total from "./Total/Total.tsx";
-import {type InvoiceDetails, type PercentFlat} from "../tabs/InvoiceTab"
+import {type InvoiceDetails} from "../tabs/InvoiceTab"
 import type {Currency} from "../data/currencies.tsx";
 import "./Preview.css"
 import type {Customer} from "../tabs/CustomerTab.tsx";
@@ -22,17 +22,6 @@ export default function Preview({products, services, currency, customer, invoice
     products.forEach(product => {subTotal += product.amount * product.cost})
     services.forEach(service => {subTotal += service.amount * service.cost})
 
-    const discont: PercentFlat = {
-        amount : 0,
-        kind : "flat"
-    }
-
-    const tax: PercentFlat = {
-        amount : 1,
-        kind : "flat"
-    }
-
-    const shipping = 15;
 
     return (
         <div>
@@ -103,9 +92,9 @@ export default function Preview({products, services, currency, customer, invoice
                 <div className="totaling-wrapper">
                     <Total
                         subTotal={subTotal}
-                        discount={discont}
-                        shipping={shipping}
-                        tax={tax}
+                        discount={invoiceDetails.discount}
+                        shipping={invoiceDetails.shipping}
+                        tax={invoiceDetails.tax}
                         currency={currency}
                     />
                 </div>
