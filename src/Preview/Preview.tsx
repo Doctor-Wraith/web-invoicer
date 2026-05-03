@@ -10,6 +10,9 @@ import PreviewInvoiceDetails from "./PreviewInvoiceDetails.tsx";
 import type {PaymentOptions} from "../tabs/PaymentTab.tsx";
 import PreviewPaymentOptions from "./PreviewPaymentOptions.tsx";
 import type {Company} from "../tabs/CompanyTab.tsx";
+import IconButton from "../custom components/IconButton.tsx";
+import {exportToPDF} from "../utils/exportToPdf.tsx";
+import {DownloadIcon} from "../assets/icons.tsx";
 
 interface PreviewProps {
     products: ProductInformation[]
@@ -30,8 +33,23 @@ export default function Preview({products, services, currency, customer, invoice
 
     return (
         <div style={{ display: "flex", flexDirection: "column", overflow: "hidden" }}>
-            <div className="title-card">
-                <h2>Preview</h2>
+            <div className="title-card" style={{justifyContent: "space-between"}}>
+                <h2 style={{margin: "20px"}}>Preview</h2>
+                <IconButton
+                    label="Download PDF"
+                    variant="glass"
+                    style={{maxHeight: "3rem"}}
+                    icon={DownloadIcon}
+                    onClick={() => exportToPDF({
+                        products,
+                        services,
+                        currency,
+                        customer,
+                        invoiceDetails,
+                        paymentOptions,
+                        company,
+                    })}
+                />
             </div>
             <div className="preview-information" style={{overflowY: "auto", padding: "5px", flex:1}}>
                 {/*Header Thing*/}

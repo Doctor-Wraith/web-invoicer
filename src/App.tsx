@@ -122,12 +122,12 @@ function App() {
   const load_invoice = () : InvoiceDetails => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY_INVOICE_TAB);
-      if (!stored) throw new Error("Invoice not found");
+      if (!stored) throw new Error();
       const parsed = JSON.parse(stored);
       return {
         ...parsed,
         issueDate: new Date(parsed.issueDate),
-        dueDate: new Date(parsed.dueDate),
+        dueDate: parsed.dueDate ? new Date(parsed.dueDate) : null,
       }
     } catch {
       return {
@@ -147,8 +147,8 @@ function App() {
   const save_invoice = (invoice: InvoiceDetails) => {
     localStorage.setItem(STORAGE_KEY_INVOICE_TAB,JSON.stringify({
         ...invoice,
-        issueDate: invoice.issueDate.toISOString(),
-        dueDate: invoice.dueDate.toISOString(),
+        issueDate: invoice.issueDate ? invoice.issueDate.toString() : new Date().toISOString(),
+        dueDate: invoice.dueDate?.toISOString(),
       }
     ));
   }

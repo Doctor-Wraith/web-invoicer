@@ -276,7 +276,7 @@ function Calendar({
 
 interface DatePickerProps {
     value?: Date | null;
-    onChange?: (date: Date) => void;
+    onChange?: (date: Date | null) => void;
     label?: string;
 }
 
@@ -308,6 +308,13 @@ export default function DatePicker({value, onChange, label="Select a data"}: Dat
         if (raw.length > 5) raw = raw.slice(0, 5) + "/" + raw.slice(5);
         if (raw.length > 10) raw = raw.slice(0, 10);
         setInputVal(raw);
+
+        if (raw.length === 0) {
+            setSelectedDate(null);
+            setError("");
+            onChange?.(null);
+            return;
+        }
 
         if (raw.length === 10) {
             const date = parseInput(raw);
@@ -353,7 +360,7 @@ export default function DatePicker({value, onChange, label="Select a data"}: Dat
     }
 
     function handleNext() {
-        if (viewMonth ==1) {
+        if (viewMonth ==11) {
             setViewMonth(0) ;
             setViewYear(y => y + 1);
         } else {

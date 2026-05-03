@@ -17,8 +17,8 @@ export interface PercentFlat {
 export interface InvoiceDetails {
     invoiceNumber: string;
     paymentTerms: string;
-    issueDate: Date;
-    dueDate: Date;
+    issueDate: Date | null;
+    dueDate: Date | null;
     endMessage: string;
     currency: Currency;
     discount: PercentFlat;
@@ -30,8 +30,8 @@ export interface InvoiceDetails {
 export interface InvoiceStore extends InvoiceDetails {
     setInvoiceNumber: (invoiceNumber: string) => void;
     setPaymentTerms: (paymentTerms: string) => void;
-    setIssueDate: (issueDate: Date) => void;
-    setDueDate: (dueDate: Date) => void;
+    setIssueDate: (issueDate: Date | null) => void;
+    setDueDate: (dueDate: Date | null) => void;
     setEndMessage: (endMessage: string) => void;
     setCurrency: (currency: Currency) => void;
     setDiscount: (discount: PercentFlat) => void;
