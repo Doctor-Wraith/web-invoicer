@@ -217,6 +217,7 @@ function App() {
               products={products}
               customer={customer}
               invoiceDetails={savedInvoice}
+              paymentOptions={paymentsOptions}
           />
         </div>
       </div>

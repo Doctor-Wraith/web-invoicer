@@ -7,6 +7,8 @@ import "./Preview.css"
 import type {Customer} from "../tabs/CustomerTab.tsx";
 import PreviewCompany from "./PreviewCompany.tsx";
 import PreviewInvoiceDetails from "./PreviewInvoiceDetails.tsx";
+import type {PaymentOptions} from "../tabs/PaymentTab.tsx";
+import PreviewPaymentOptions from "./PreviewPaymentOptions.tsx";
 
 interface PreviewProps {
     products: ProductInformation[]
@@ -14,9 +16,10 @@ interface PreviewProps {
     currency: Currency
     customer: Customer
     invoiceDetails: InvoiceDetails
+    paymentOptions: PaymentOptions[]
 }
 
-export default function Preview({products, services, currency, customer, invoiceDetails}: PreviewProps) {
+export default function Preview({products, services, currency, customer, invoiceDetails, paymentOptions}: PreviewProps) {
 
     let subTotal = 0;
     products.forEach(product => {subTotal += product.amount * product.cost})
@@ -91,14 +94,26 @@ export default function Preview({products, services, currency, customer, invoice
 
                 {/*Totals*/}
                 {(subTotal > 0) && (
-                    <div className="totaling-wrapper">
-                        <Total
-                            subTotal={subTotal}
-                            discount={invoiceDetails.discount}
-                            shipping={invoiceDetails.shipping}
-                            tax={invoiceDetails.tax}
-                            currency={currency}
-                        />
+                    <>
+                        <div className="totaling-wrapper">
+                            <Total
+                                subTotal={subTotal}
+                                discount={invoiceDetails.discount}
+                                shipping={invoiceDetails.shipping}
+                                tax={invoiceDetails.tax}
+                                currency={currency}
+                            />
+                        </div>
+                        <hr/>
+                    </>
+                )}
+
+                {paymentOptions.length > 0 && (
+                    <div className="payment-wrapper">
+                        <h4>Payment Details</h4>
+                        {paymentOptions.map((o) => (
+                            <PreviewPaymentOptions option={o}/>
+                        ))}
                     </div>
                 )}
 
