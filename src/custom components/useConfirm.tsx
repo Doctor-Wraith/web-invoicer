@@ -1,5 +1,5 @@
 import {TrashIcon} from "../assets/icons.tsx";
-import { useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 
 interface ConfirmOptions {
     title?: string;
@@ -50,6 +50,10 @@ export function useConfirm() {
         return (
             <div style={styles.overlay} onClick={() => handleChoice(false)}>
                 <div style={styles.dialog} onClick={(e) => e.stopPropagation()}>
+                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                        <span/>
+                        <button style={styles.closeBtn} onClick={() => handleChoice(false)}>✕</button>
+                    </div>
                     <div style={styles.iconWrapper}>
                         <TrashIcon />
                     </div>
@@ -154,6 +158,20 @@ const styles: Record<string, React.CSSProperties> = {
         fontSize: "14px",
         fontWeight: 500,
         transition: "background 0.2s",
+    },
+    closeBtn: {
+        background: "rgba(255,255,255,0.08)",
+        border: "1px solid rgba(255,255,255,0.15)",
+        borderRadius: "8px",
+        color: "rgba(255,255,255,0.6)",
+        cursor: "pointer",
+        fontSize: "14px",
+        width: "32px",
+        height: "32px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
     },
     confirmBtn: {
         flex: 1,

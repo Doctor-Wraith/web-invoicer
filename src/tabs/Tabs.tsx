@@ -117,6 +117,7 @@ export default function Tabs({
                     setPaymentOptions={setPaymentOptions}
                     onSave={savePaymentOptions}
                     paymentPrompt={paymentPrompt}
+                    confirm={confirm}
                 />
             </div>
 

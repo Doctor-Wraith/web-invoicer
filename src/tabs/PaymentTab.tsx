@@ -12,9 +12,10 @@ interface Props {
     setPaymentOptions: React.Dispatch<React.SetStateAction<PaymentOptions[]>>;
     onSave: (paymentOptions: PaymentOptions[]) => void;
     paymentPrompt: () => Promise<PaymentOptions | null>;
+    confirm: (message: string) => Promise<unknown>;
 }
 
-export default function PaymentTab({paymentOptions, setPaymentOptions, onSave, paymentPrompt}: Props): JSX.Element {
+export default function PaymentTab({paymentOptions, setPaymentOptions, onSave, paymentPrompt, confirm}: Props): JSX.Element {
 
 
     const handleChange = (updated: PaymentOptions) => {
@@ -46,9 +47,12 @@ export default function PaymentTab({paymentOptions, setPaymentOptions, onSave, p
         onSave(added);
     }
 
-    const handleDeleteAll = () => {
-        setPaymentOptions([]);
-        onSave([]);
+    const handleDeleteAll = async () => {
+        const ok = await confirm("Are you sure you want to Delete All?");
+        if (ok) {
+            setPaymentOptions([]);
+            onSave([])
+        }
     }
 
     return (

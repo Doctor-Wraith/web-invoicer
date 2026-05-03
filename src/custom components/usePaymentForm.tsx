@@ -62,8 +62,8 @@ export function usePaymentForm() {
     }, [draftBank, draftPayPal]);
 
     const PaymentFormDialog = !state.isOpen ? null : (
-        <div style={styles.overlay}>
-            <div style={styles.dialog}>
+        <div style={styles.overlay} onClick={() => handleChoice(false)}>
+            <div style={styles.dialog} onClick={(e) => e.stopPropagation()}>
 
                 {/* Header — always visible */}
                 <div style={styles.header}>

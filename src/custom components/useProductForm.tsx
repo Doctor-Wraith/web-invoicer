@@ -1,5 +1,5 @@
 import type {ProductInformation} from "./productRow/ProductRow.tsx";
-import {useCallback, useState} from "react";
+import React, {useCallback, useState} from "react";
 
 type Mode = "product" | "service"
 
@@ -57,10 +57,16 @@ export function useProductForm() {
         const  ProductFormDialog = !state.isOpen ? null :(
             <div style={styles.overlay} onClick={() => handleChoice(false)}>
                 <div style={styles.dialog} onClick={(e) => e.stopPropagation()}>
-
-                    <h2 style={styles.title}>{title}</h2>
-                    <p style={styles.subtitle}>Fill in the details below</p>
-
+                    <div style={{display: "flex", justifyContent:"space-between"}}>
+                        <div>
+                            <h2 style={styles.title}>{title}</h2>
+                            <p style={styles.subtitle}>Fill in the details below</p>
+                        </div>
+                        <div style={{display: "flex", justifyContent: "space-between"}}>
+                            <span/>
+                            <button style={styles.closeBtn} onClick={() => handleChoice(false)}>✕</button>
+                        </div>
+                    </div>
                     <div style={styles.fields}>
                         <div style={styles.field}>
                             <label style={styles.label}>Name</label>
@@ -176,6 +182,20 @@ const styles: Record<string, React.CSSProperties> = {
         flexDirection: "column",
         gap: "12px",
         marginBottom: "1.5rem",
+    },
+    closeBtn: {
+        background: "rgba(255,255,255,0.08)",
+        border: "1px solid rgba(255,255,255,0.15)",
+        borderRadius: "8px",
+        color: "rgba(255,255,255,0.6)",
+        cursor: "pointer",
+        fontSize: "14px",
+        width: "32px",
+        height: "32px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
     },
     row: {
         display: "flex",
