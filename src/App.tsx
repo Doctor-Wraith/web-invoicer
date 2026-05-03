@@ -9,6 +9,7 @@ import {useConfirm} from "./custom components/useConfirm.tsx";
 import {useProductForm} from "./custom components/useProductForm.tsx";
 import type {PaymentOptions} from "./tabs/PaymentTab.tsx";
 import {usePaymentForm} from "./custom components/usePaymentForm.tsx";
+import type {Company} from "./tabs/CompanyTab.tsx";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
   const STORAGE_KEY_CUSTOMER = "customer";
   const STORAGE_KEY_INVOICE_TAB = "invoiceTab";
   const STORAGE_KEY_PAYMENTS = "payments";
+  const STORAGE_KEY_COMPANY = "company";
   //endregion
 
   //region stored data interfaces
@@ -79,6 +81,23 @@ function App() {
     localStorage.setItem(STORAGE_KEY_ACTIVE_TAB, tab);
   }
   //endregion
+
+  //region Company
+  const [company, setCompany] = useState<Company>(() => {
+    const saved = localStorage.getItem(STORAGE_KEY_COMPANY);
+    return saved ? JSON.parse(saved) : {
+      name: "",
+      email: "",
+      address: "",
+      phone: "",
+    };
+  });
+
+  const handleCompanyChange = (company: Company) => {
+    setCompany(company);
+    localStorage.setItem(STORAGE_KEY_COMPANY, JSON.stringify(company));
+  }
+
   //region customer
   const [customer, setCustomer] = useState<Customer>(() => {
     const saved = localStorage.getItem(STORAGE_KEY_CUSTOMER)
@@ -206,6 +225,8 @@ function App() {
             setPaymentOptions={setPaymentsOptions}
             savePaymentOptions={save_payments}
             paymentPrompt={paymentPrompt}
+            company={company}
+            setCompany={handleCompanyChange}
           />
 
         </div>
@@ -218,6 +239,7 @@ function App() {
               customer={customer}
               invoiceDetails={savedInvoice}
               paymentOptions={paymentsOptions}
+              company={company}
           />
         </div>
       </div>

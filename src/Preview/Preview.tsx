@@ -9,6 +9,7 @@ import PreviewCompany from "./PreviewCompany.tsx";
 import PreviewInvoiceDetails from "./PreviewInvoiceDetails.tsx";
 import type {PaymentOptions} from "../tabs/PaymentTab.tsx";
 import PreviewPaymentOptions from "./PreviewPaymentOptions.tsx";
+import type {Company} from "../tabs/CompanyTab.tsx";
 
 interface PreviewProps {
     products: ProductInformation[]
@@ -17,9 +18,10 @@ interface PreviewProps {
     customer: Customer
     invoiceDetails: InvoiceDetails
     paymentOptions: PaymentOptions[]
+    company: Company
 }
 
-export default function Preview({products, services, currency, customer, invoiceDetails, paymentOptions}: PreviewProps) {
+export default function Preview({products, services, currency, customer, invoiceDetails, paymentOptions, company}: PreviewProps) {
 
     let subTotal = 0;
     products.forEach(product => {subTotal += product.amount * product.cost})
@@ -35,7 +37,7 @@ export default function Preview({products, services, currency, customer, invoice
                 {/*Header Thing*/}
                 <div className="Preview-header"
                      style={{display: "inline-flex", justifyContent: "space-between", width: "100%"}}>
-                    <PreviewCompany/>
+                    <PreviewCompany company={company} />
                     <PreviewInvoiceDetails invoiceDetails={invoiceDetails}/>
                 </div>
 

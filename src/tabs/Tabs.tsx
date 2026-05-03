@@ -2,7 +2,7 @@ import ProductTab from "./ProductTab"
 import CustomerTab, {type Customer} from "./CustomerTab"
 import InvoiceTab, {type InvoiceStore} from "./InvoiceTab"
 import PaymentTab, {type PaymentOptions} from "./PaymentTab"
-import CompanyTab from "./CompanyTab"
+import CompanyTab, {type Company} from "./CompanyTab"
 import ServicesTab from "./ServicesTab.tsx";
 import "../styles/Tabs.css"
 import React, {useEffect, useRef, useState} from "react";
@@ -26,6 +26,8 @@ interface TabProps {
     confirm: (message: string) => Promise<unknown>;
     prompt:  (mode: Mode) => Promise<ProductInformation | null>
     paymentPrompt : () => Promise<PaymentOptions | null>
+    company: Company;
+    setCompany: (company: Company) => void;
 }
 
 type Mode = "product" | "service";
@@ -40,7 +42,8 @@ export default function Tabs({
     customer, setCustomer,
     confirm, prompt,
     paymentOptions, savePaymentOptions, setPaymentOptions,
-    paymentPrompt
+    paymentPrompt,
+    company, setCompany
 }: TabProps) {
 
     const [indicatorStyle, setIndicatorStyle] = useState({});
@@ -122,7 +125,10 @@ export default function Tabs({
             </div>
 
             <div className={`tabcontent${activeTab === "Company" ? " active" : ""}`}>
-                <CompanyTab />
+                <CompanyTab
+                    company={company}
+                    setCompany={setCompany}
+                />
             </div>
         </div>
     )

@@ -1,0 +1,16 @@
+.company-tab {
+    width: 100%;
+    overflow: hidden;
+}
+.company-header h3 {
+    margin: 0;
+}
+
+.company-header {
+    display: flex;
+    flex-shrink: 0;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 12px;
+}
