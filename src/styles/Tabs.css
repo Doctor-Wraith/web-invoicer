@@ -2,20 +2,21 @@
     position: relative;
     overflow: hidden;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     border-radius: 16px;
     background-color: var(--accent-color);
     padding: 5px 20px;
     flex: none;
-    align-self: center
+    align-self: center;
+    flex-wrap: wrap;
+    overflow-x: auto;
 }
 
 .tab-indicator {
     position: absolute;
     top: 5px;
     left: 0;
-    height: calc(100% - 10px);
+    height: calc(1em + 20px);
     /* From https://css.glass */
     background: var(--select-color);
     /* border-radius: 16px; */

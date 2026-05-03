@@ -1,6 +1,6 @@
 import './App.css'
 import Tabs from "./tabs/Tabs.tsx"
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import type {ProductInformation} from "./custom components/productRow/ProductRow.tsx";
 import Preview from "./Preview/Preview.tsx";
 import {type Customer} from "./tabs/CustomerTab.tsx";
@@ -197,50 +197,90 @@ function App() {
   const { prompt, ProductFormDialog} = useProductForm();
   const {paymentPrompt, PaymentFormDialog} = usePaymentForm();
 
+  // Styling for small screens
+  const [isCompact, setIsCompact] = useState<boolean>(window.innerWidth < 1120);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsCompact(window.innerWidth < 1120);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  })
+
+  const [mobileView, setMobileView] = useState<"editor" | "preview">("editor");
+
+
   return (
     <>
       <div className="app">
-        <ConfirmDialog />
-        {ProductFormDialog}
-        {PaymentFormDialog}
-        <div className="glass user-input main-panel">
-          <div className="title-card">
-            <h2>Invoice Details</h2>
-          </div>
-          <Tabs
-            activeTab={activeTab}
-            setActiveTab={handleTabChange}
-            services={services}
-            setServices={setServices}
-            save_services={save_services}
-            products={products}
-            save_products={save_products}
-            setProducts={setProducts}
-            invoice_store={invoiceStore}
-            customer={customer}
-            setCustomer={handleCustomerChange}
-            confirm={confirm}
-            prompt={prompt}
-            paymentOptions={paymentsOptions}
-            setPaymentOptions={setPaymentsOptions}
-            savePaymentOptions={save_payments}
-            paymentPrompt={paymentPrompt}
-            company={company}
-            setCompany={handleCompanyChange}
-          />
+          <ConfirmDialog/>
+          {ProductFormDialog}
+          {PaymentFormDialog}
+          {isCompact && (
+              <div className="mobile-tabs">
+                <button
+                    className={mobileView === "editor" ? "active" : ""}
+                    onClick={() => setMobileView("editor")}
+                >
+                  Editor
+                </button>
 
-        </div>
+                <button
+                    className={mobileView === "preview" ? "active" : ""}
+                    onClick={() => setMobileView("preview")}
+                >
+                  Preview
+                </button>
+              </div>
+          )}
 
-        <div className="glass preview main-panel">
-          <Preview
-              currency={currency}
-              services={services}
-              products={products}
-              customer={customer}
-              invoiceDetails={savedInvoice}
-              paymentOptions={paymentsOptions}
-              company={company}
-          />
+        <div className="panels">
+          {(!isCompact || mobileView === "editor") && (
+            <div className="glass user-input main-panel">
+              <div className="title-card">
+                <h2>Invoice Details</h2>
+              </div>
+              <Tabs
+                  activeTab={activeTab}
+                  setActiveTab={handleTabChange}
+                  services={services}
+                  setServices={setServices}
+                  save_services={save_services}
+                  products={products}
+                  save_products={save_products}
+                  setProducts={setProducts}
+                  invoice_store={invoiceStore}
+                  customer={customer}
+                  setCustomer={handleCustomerChange}
+                  confirm={confirm}
+                  prompt={prompt}
+                  paymentOptions={paymentsOptions}
+                  setPaymentOptions={setPaymentsOptions}
+                  savePaymentOptions={save_payments}
+                  paymentPrompt={paymentPrompt}
+                  company={company}
+                  setCompany={handleCompanyChange}
+              />
+
+            </div>
+        )
+        }
+
+          {(!isCompact || mobileView === "preview") && (
+              <div className="glass preview main-panel">
+                <Preview
+                    currency={currency}
+                    services={services}
+                    products={products}
+                    customer={customer}
+                    invoiceDetails={savedInvoice}
+                    paymentOptions={paymentsOptions}
+                    company={company}
+                />
+              </div>
+          )}
         </div>
       </div>
     </>

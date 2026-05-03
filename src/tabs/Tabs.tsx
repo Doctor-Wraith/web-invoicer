@@ -52,17 +52,30 @@ export default function Tabs({
     useEffect(() => {
         const updateIndicator = () => {
             const activeEl = tabRefs.current[activeTab];
-            if (activeEl && activeEl.parentElement) {
+            const container = activeEl?.parentElement as HTMLElement;
+            if (activeEl && container) {
+                const containerRect = container.getBoundingClientRect();
+                const activeElRect = activeEl.getBoundingClientRect();
                 setIndicatorStyle({
-                    width: activeEl.offsetWidth - 5,
-                    transform: `translateX(${activeEl.offsetLeft}px)`,
+                    width: activeElRect.width - 5,
+                    transform: `translate(${activeElRect.left - containerRect.left}px, ${activeElRect.top - containerRect.top}px)`,
                 });
             }
         };
 
         updateIndicator();
+        const resizeObserver = new ResizeObserver(() => {
+            requestAnimationFrame(updateIndicator);
+        });
+
+        if (tabRefs.current[activeTab]?.parentElement) {
+            resizeObserver.observe(tabRefs.current[activeTab]!.parentElement!);
+        }
         window.addEventListener("resize", updateIndicator);
-        return () => window.removeEventListener("resize", updateIndicator);
+        return () => {
+            resizeObserver.disconnect();
+            window.removeEventListener("resize", updateIndicator);
+        }
     }, [activeTab]);
 
     return (

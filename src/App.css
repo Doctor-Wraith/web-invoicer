@@ -2,11 +2,21 @@
   height: 100vh;
   color: white;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   justify-items: center;
   gap: 30px
 }
+
+.panels {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  justify-content: center;
+  flex: 1;
+}
+
 .glass {
   /* From https://css.glass */
   background: rgba(255, 255, 255, 0.31);
@@ -42,8 +52,11 @@
     min-width: 0;
   }
 
-  .preview {
-    display: none;
+  .panels {
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
   }
 }
 
@@ -77,4 +90,24 @@ input:not(.no-spinner) {
 textarea {
   resize: none;
   height: 100%;
+}
+
+.mobile-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+
+.mobile-tabs button {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+  color: white;
+  cursor: pointer;
+}
+
+.mobile-tabs button.active {
+  background: rgba(255,255,255,0.2);
 }
