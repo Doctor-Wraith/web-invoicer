@@ -1,7 +1,7 @@
 import ProductTab from "./ProductTab"
 import CustomerTab, {type Customer} from "./CustomerTab"
 import InvoiceTab, {type InvoiceStore} from "./InvoiceTab"
-import PaymentTab from "./PaymentTab"
+import PaymentTab, {type PaymentOptions} from "./PaymentTab"
 import CompanyTab from "./CompanyTab"
 import ServicesTab from "./ServicesTab.tsx";
 import "../styles/Tabs.css"
@@ -17,11 +17,15 @@ interface TabProps {
     products: ProductInformation[];
     setProducts: React.Dispatch<React.SetStateAction<ProductInformation[]>>;
     save_products: (products: ProductInformation[]) => void;
+    paymentOptions: PaymentOptions[];
+    setPaymentOptions: React.Dispatch<React.SetStateAction<PaymentOptions[]>>;
+    savePaymentOptions: (paymentOptions: PaymentOptions[]) => void;
     invoice_store: InvoiceStore;
     customer: Customer;
     setCustomer: (customer: Customer) => void;
     confirm: (message: string) => Promise<unknown>;
     prompt:  (mode: Mode) => Promise<ProductInformation | null>
+    paymentPrompt : () => Promise<PaymentOptions | null>
 }
 
 type Mode = "product" | "service";
@@ -34,7 +38,9 @@ export default function Tabs({
     products, setProducts, save_products,
     invoice_store,
     customer, setCustomer,
-    confirm, prompt
+    confirm, prompt,
+    paymentOptions, savePaymentOptions, setPaymentOptions,
+    paymentPrompt
 }: TabProps) {
 
     const [indicatorStyle, setIndicatorStyle] = useState({});
@@ -106,7 +112,12 @@ export default function Tabs({
             </div>
 
             <div className={`tabcontent${activeTab === "Payment" ? " active" : ""}`}>
-                <PaymentTab />
+                <PaymentTab
+                    paymentOptions={paymentOptions}
+                    setPaymentOptions={setPaymentOptions}
+                    onSave={savePaymentOptions}
+                    paymentPrompt={paymentPrompt}
+                />
             </div>
 
             <div className={`tabcontent${activeTab === "Company" ? " active" : ""}`}>

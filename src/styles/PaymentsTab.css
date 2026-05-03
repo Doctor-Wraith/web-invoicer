@@ -1,0 +1,27 @@
+.payment-tab {
+    width: 100%;
+    overflow: hidden;
+}
+.payment-header h3 {
+    margin: 0;
+}
+
+.payment-header {
+    display: flex;
+    flex-shrink: 0;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 12px;
+}
+.payment-header-buttons {
+    display: inline-flex;
+    gap: 8px;
+}
+
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+}

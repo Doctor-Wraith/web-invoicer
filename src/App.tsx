@@ -7,6 +7,8 @@ import {type Customer} from "./tabs/CustomerTab.tsx";
 import type {InvoiceDetails, InvoiceStore} from "./tabs/InvoiceTab.tsx";
 import {useConfirm} from "./custom components/useConfirm.tsx";
 import {useProductForm} from "./custom components/useProductForm.tsx";
+import type {PaymentOptions} from "./tabs/PaymentTab.tsx";
+import {usePaymentForm} from "./custom components/usePaymentForm.tsx";
 
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
   const STORAGE_KEY_ACTIVE_TAB = "activeTab";
   const STORAGE_KEY_CUSTOMER = "customer";
   const STORAGE_KEY_INVOICE_TAB = "invoiceTab";
+  const STORAGE_KEY_PAYMENTS = "payments";
   //endregion
 
   //region stored data interfaces
@@ -36,6 +39,22 @@ function App() {
     localStorage.setItem(STORAGE_KEY_SERVICES, JSON.stringify(products));
   }
   //endregion
+
+  //region payment options
+  const load_payments = ():PaymentOptions[] => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY_PAYMENTS);
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return []
+    }
+  }
+
+  const save_payments = (payments: PaymentOptions[]) => {
+    localStorage.setItem(STORAGE_KEY_PAYMENTS, JSON.stringify(payments));
+  }
+  //end region
+
   //region products
   const load_products = ():ProductInformation[] => {
     try {
@@ -151,18 +170,20 @@ function App() {
   //region Values
   const [services, setServices] = useState<ProductInformation[]>(load_services);
   const [products, setProducts] = useState<ProductInformation[]>(load_products);
-
+  const [paymentsOptions, setPaymentsOptions] = useState<PaymentOptions[]>(load_payments);
 
   //endregion
 
   const {confirm, ConfirmDialog} = useConfirm();
   const { prompt, ProductFormDialog} = useProductForm();
+  const {paymentPrompt, PaymentFormDialog} = usePaymentForm();
 
   return (
     <>
       <div className="app">
         <ConfirmDialog />
         {ProductFormDialog}
+        {PaymentFormDialog}
         <div className="glass user-input main-panel">
           <div className="title-card">
             <h2>Invoice Details</h2>
@@ -181,6 +202,10 @@ function App() {
             setCustomer={handleCustomerChange}
             confirm={confirm}
             prompt={prompt}
+            paymentOptions={paymentsOptions}
+            setPaymentOptions={setPaymentsOptions}
+            savePaymentOptions={save_payments}
+            paymentPrompt={paymentPrompt}
           />
 
         </div>
