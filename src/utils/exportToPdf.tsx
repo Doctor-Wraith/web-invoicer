@@ -1,20 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-import jsPDF from 'jsPDF';
-import autoTable from "jspdf-autotable";
-
-// at the top of the file, extend jsPDF's type
-declare module "jspdf" {
-    interface jsPDF {
-        lastAutoTable: { finalY: number };
-    }
-}
 import type { ProductInformation } from "../custom components/productRow/ProductRow.tsx";
 import type { Currency } from "../data/currencies.tsx";
 import type { Customer } from "../tabs/CustomerTab.tsx";
 import type { InvoiceDetails, PercentFlat } from "../tabs/InvoiceTab.tsx";
 import type { PaymentOptions } from "../tabs/PaymentTab.tsx";
 import type { Company } from "../tabs/CompanyTab.tsx";
+import type { jsPDF } from "jspdf";
 
 interface pdfProps {
     products: ProductInformation[]
@@ -52,7 +42,7 @@ function applyPercentFlat(
 }
 // ─── Main ────────────────────────────────────────────────────────────────────
 
-export function exportToPDF({
+export async function exportToPDF({
     products,
     services,
     currency,
@@ -61,7 +51,17 @@ export function exportToPDF({
     paymentOptions,
     company,
 }: pdfProps) {
-    const doc = new jsPDF({ unit: "mm", format: "a4" });
+
+    const {jsPDF} = await import("jspdf");
+    const {autoTable} = await import("jspdf-autotable");
+
+    type jsPDFWithAutoTable = jsPDF & {
+        lastAutoTable?: {
+            finalY: number;
+        };
+    };
+
+    const doc = new jsPDF({ unit: "mm", format: "a4" }) as jsPDFWithAutoTable;
     const W = doc.internal.pageSize.getWidth();   // 210
     const H = doc.internal.pageSize.getHeight();  // 297
     const L = 14;   // left margin
@@ -199,7 +199,7 @@ export function exportToPDF({
             tableLineWidth: 0.2,
         });
 
-        return doc.lastAutoTable.finalY + 6;
+        return (doc.lastAutoTable?.finalY ?? startY) + 6;
     };
     if ((products.length >0)) {
         y = renderTable("Products", products, "Qty", y);

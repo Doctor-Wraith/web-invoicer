@@ -30,6 +30,17 @@ export default function Preview({products, services, currency, customer, invoice
     products.forEach(product => {subTotal += product.amount * product.cost})
     services.forEach(service => {subTotal += service.amount * service.cost})
 
+    const handleExport = async () => {
+        await exportToPDF({
+            products,
+            services,
+            currency,
+            customer,
+            invoiceDetails,
+            paymentOptions,
+            company,
+        })
+    }
 
     return (
         <div style={{ display: "flex", flexDirection: "column", overflow: "hidden" }}>
@@ -40,15 +51,7 @@ export default function Preview({products, services, currency, customer, invoice
                     variant="glass"
                     style={{maxHeight: "3rem"}}
                     icon={DownloadIcon}
-                    onClick={() => exportToPDF({
-                        products,
-                        services,
-                        currency,
-                        customer,
-                        invoiceDetails,
-                        paymentOptions,
-                        company,
-                    })}
+                    onClick={handleExport}
                 />
             </div>
             <div className="preview-information" style={{overflowY: "auto", padding: "5px", flex:1}}>
