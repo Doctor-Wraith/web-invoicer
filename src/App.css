@@ -28,14 +28,16 @@
 }
 
 .main-panel {
+  margin-top: 1em;
   display: flex;
+  flex: 1;
   flex-direction: column;
   height: 90vh;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
   padding: 10px;
   overflow-x: hidden;
-  min-width: 65vh;
-  max-width: 65vh;
+  min-width: 70vh;
+  max-width: 80vh;
 }
 
 .title-card {

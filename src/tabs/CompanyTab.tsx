@@ -51,7 +51,7 @@ export default function CompanyTab({company, setCompany}: CompanyTabsProps) {
             </div>
             <hr/>
 
-            <div style={{width:'100%', height:'100%', gap:'10px', display:'flex', flexDirection:'column'}}>
+            <div style={{width:'100%', height:'100%', gap:'10px', display:'flex', flexDirection:'column', overflowY:'auto'}}>
                 <label htmlFor="company-name">Company Name</label>
                 <input
                     id="company-name"

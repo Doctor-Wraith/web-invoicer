@@ -1,5 +1,6 @@
 :root {
   overflow-x: hidden;
+  overflow-y: hidden;
   background: linear-gradient(90deg, #2a1ad8 0%, #4e26e2 25%, #7231ec 50%, #953df5 75%, #b948ff 100%);
   --accent-color: #4e26e250;
   --select-color: rgba(103, 7, 139, 0.23);
